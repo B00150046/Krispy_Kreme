@@ -9,10 +9,10 @@ export async function GET(req, res) {
         await client.connect();
         console.log('Connected to client');
         const db = client.db('Krispee');
-        const col = db.collection('products');
-        const Resp = await col.find({}).toArray();
-        console.log(Resp);
-        return Response.json(Resp);
+        const col = db.collection('cart');
+        
+     
+        return Response.json("Item added to cart");
     }
     catch (err) {
         console.log(err.stack);
