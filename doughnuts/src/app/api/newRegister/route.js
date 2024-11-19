@@ -3,11 +3,13 @@ const { MongoClient, ServerApiVersion } = require('mongodb');
 export async function GET(req, res) {
 
 
-  async function run (req, res) {
-  try {
+  
+  const { searchParams } = new URL(req.url)
     // Connect to the Atlas cluster
-    const uri = "mongodb+srv://user:Password456*@database.gau0z.mongodb.net/?retryWrites=true&w=majority&appName=database";
+    const uri = "mongodb+srv://root:lUJeU2iPcFlE53tb@database.gau0z.mongodb.net/?retryWrites=true&w=majority&appName=database";
     const client = new MongoClient(uri);
+
+
     console.log('Connecting to client');
     // Connect to the Atlas cluster
     await client.connect();
@@ -15,27 +17,17 @@ export async function GET(req, res) {
     const db = client.db('Krispee');
     const col = db.collection('users');
     // Create new user, automatically set role to customer
-    const email = searchParams('email');
-    const password = searchParams('password');
-    const phone = searchParams('phoneNo');
+    const name = searchParams.get('name');
+    const email = searchParams.get('email');
+    const phone = searchParams.get('phone');
 
-    const userDocuments = [{
-      email: email,
-        password: password,
-        phoneNo: phone,
-        role: 'customer',
+    const document = await col.insertOne({     "name": name,      "email": email,      "phone": phone,      "role": "customer"}); // Print results
+
    
-    }]; // Insert the documents into the specified collection
-    const document = await col.insertOne(userDocuments); // Print results
 
-    console.log('Document found:\n' + JSON.stringify(document));
-  } catch (err) {
-    console.log(err.stack);
-  } finally {
-    await client.close();
-  }
-}
-run()
+
+
+
 return Response.json({"ok":""})
 
 

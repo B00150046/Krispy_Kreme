@@ -3,7 +3,7 @@ const { MongoClient, ServerApiVersion } = require('mongodb');
 export async function GET(req, res) {
 
     
-    const uri = "mongodb+srv://user:wpFFDYfXTdvLFy2h@database.gau0z.mongodb.net/?retryWrites=true&w=majority&appName=database";
+    const uri = "mongodb+srv://root:lUJeU2iPcFlE53tb@database.gau0z.mongodb.net/?retryWrites=true&w=majority&appName=database";
     const client = new MongoClient(uri);
     try{
         await client.connect();
