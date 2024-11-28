@@ -10,8 +10,9 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import TextField from '@mui/material/TextField';
-import { Container, Table, TableContainer, TableHead } from '@mui/material';
-//import { Tab } from "bootstrap";
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { Container, Icon, Table, TableContainer, TableHead } from '@mui/material';
+
 
 export default function DoughnutApp() {
 const [data, setData] = useState([])
@@ -20,30 +21,17 @@ const [cart, setCart] = useState(null)
 const [order, setOrders] = useState([])
 const [weather, setWeatherData] = useState(0)
 
-const handleNewRegister = (event) => {
+
+const newCartItem = (p_name, price) => {
     console.log("handling submit");
-
+    runDBCallAsync(`http://localhost:3000/api/newCartItem?pname=${p_name}&price=${price}`)
     alert("clicked")
-    event.preventDefault();
-   
-    const data = new FormData(event.currentTarget);
-    let name = data.get('reg_name')
-    let email = data.get('reg_email')
-    let phone = data.get('reg_phone')
-
-    
-  runDBCallAsync(`http://localhost:3000/api/newregister?name=${name}&email=${email}&phone=${phone}`)
-  }; // end handle submit
-
-
+}; // end handle submit
 
   async function runDBCallAsync(url) {
     const res = await fetch(url);
     const data = await res.json();
-
     alert(data);
-
-   
     }  
 
 useEffect(() => {
@@ -77,62 +65,9 @@ useEffect(() => {
 
  //____________________________________________________________________________________
 //PAGES FOR MULTI-PAGE APP
-    const [showRegister, setShowRegister] = useState(false);
-    const [showLogin, setShowLogin] = useState(false);
-    const [showCart, setShowCart] = useState(false);
-    const [showProfile, setShowProfile] = useState(false);
-    const [showProducts, setShowProducts] = useState(true);
-    const [showCheckOut, setShowCheckout] = useState(false);
-
-    function handleRegister() {
-        setShowRegister(true);
-        setShowLogin(false);
-        setShowCart(false);
-        setShowProfile(false);
-        setShowProducts(false);
-        setShowCheckout(false)
-    }
-
-    function handleLogin() {
-        setShowRegister(false);
-        setShowLogin(true);
-        setShowCart(false);
-        setShowProfile(false);
-        setShowProducts(false);
-        setShowCheckout(false)
-    }
-    function handleCart() {
-        setShowRegister(false);
-        setShowLogin(false);
-        setShowCart(true);
-        setShowProfile(false);
-        setShowProducts(false);
-        setShowCheckout(false)
-    }
-    function handleProfile() {
-        setShowRegister(false);
-        setShowLogin(false);
-        setShowCart(false);
-        setShowProfile(true);
-        setShowProducts(false);
-        setShowCheckout(false)
-    }
-    function handleProducts() {
-        setShowRegister(false);
-        setShowLogin(false);
-        setShowCart(false);
-        setShowProfile(false);
-        setShowProducts(true);
-        setShowCheckout(false)
-    }
-    function handleCheckOut() {
-        setShowRegister(false);
-        setShowLogin(false);
-        setShowCart(false);
-        setShowProfile(false);
-        setShowProducts(false);
-        setShowCheckout(true)
-    } 
+   
+    const [showProfile, setShowProfile] = useState(true);
+   
 
     //____________________________________________________________________________________
 
@@ -181,15 +116,28 @@ useEffect(() => {
                     </Typography>
                     <Button
                         variant="outlined"
+                        onClick={handleProducts}
+                        sx ={{
+                            color: '#355746',
+                            //make font bold
+                            fontWeight: 'bold',
+                            '&:hover': {
+                                color: '#fff',
+                            },
+                        }}>
+                        Products
+                    </Button>
+                    <Button
+                      
                         onClick={handleLogin}
                         sx={{
-                            border: '3px solid',
-                            borderColor: '#cd0f2a',
+                          
                             color: '#355746',
-                            backgroundColor: '#fff',
+                            //make font bold
+                            fontWeight: 'bold',
+                           
                             '&:hover': {
-                                backgroundColor: '#cd0f2a',
-                                borderColor: '#fff',
+                               
                                 color: '#fff',
                             },
                         }}
@@ -197,7 +145,13 @@ useEffect(() => {
                     >
                         Login
                     </Button>
-                    <div>  Today's temperature: {JSON.stringify(weather.temp)}</div>
+                    <div sx={{
+                        size: '10px',
+                        color: '#fff',
+                        fontWeight: 'bold',
+                    }}>  
+                    Today's temperature: {JSON.stringify(weather.temp)}
+                    </div>
                 </Toolbar>
             </AppBar>
             <Container component="main" maxWidth="xs">
@@ -273,27 +227,17 @@ useEffect(() => {
                              },
                          }}
                      />
-                   
-
 
                    <Button
-
-type="submit"
-
-fullWidth
-
-variant="contained"
-
-sx={{ mt: 3, mb: 2 }}
-
->
-
-Sign In
-
-</Button>
-                   
+                   type="submit"
+                   variant="contained"
+                   sx={{ mt: 3, 
+                        mb: 2,
+                        backgroundColor: '#cd0f2a',
+                        color: '#fff',}}>
+                            Sign In
+                            </Button>
                  </Box>
-             
          </Box>
             )}
             {showLogin && (
@@ -306,13 +250,13 @@ Sign In
                              paddingTop: '125px',
                          }}
                      >
-                         <Typography>Create a new account here</Typography>
+                         <Typography>Log into an existing account</Typography>
                          <TextField
                              margin="normal"
                              required
-                             id="email"
+                             id="log_email"
                              label="Email Address"
-                             name="email"
+                             name="log_email"
                              autoComplete="email"
                              autoFocus
                              sx={{
@@ -326,10 +270,10 @@ Sign In
                          <TextField
                              margin="normal"
                              required
-                             name="password"
+                             name="log_password"
                              label="Password"
                              type="password"
-                             id="password"
+                             id="log_password"
                              autoComplete="current-password"
                              sx={{
                                  backgroundColor: '#fff',
@@ -340,7 +284,7 @@ Sign In
                              }}
                          />
                          <Button
-                             onClick={() => handleDash()}
+                             onClick={() => handleProfile()}
                              sx={{ mt: 3, mb: 2, backgroundColor: '#cd0f2a' }}
                          >
                              Login
@@ -406,28 +350,47 @@ Sign In
             {showProducts && (
                 
                 <Box component="section" sx={{ p: 2, }}>
-                    This could be the products page!
+                    <Typography variant="h4" sx={{ textAlign: 'center' }}>
+                   
+                        Our Products
+                        </Typography>
                     <div
                     sx = {{
-                        display: 'flex',
-                        flexWrap: 'wrap',
-                        justifyContent: 'center',
+                    //Display in a grid
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(3, 1fr)',
+                    gap: '20px',
+
+                    
                     }}>
                     {
                      pro.map((item, i) => (
                      <div style={{padding: '20px',
-                        border: '1px solid #cd0f2a',
+                        margin: '20px',
+                        border: '3px solid #cd0f2a',
+                        background: '#b7edd4',
+                        alignContent: 'center',
                         borderRadius: '5px',
+                        width: '175px',
                      }} key={i} >
                      <img src={item.img_src} alt={item.p_name} width={100} height={100} />
                     <br></br>
+                    <div sx={{
+                        alignContent: 'center',
+                        fontFamily: 'Arial',
+                        fontSize: '1.5em',
+                        fontWeight: 'bold',
+                        color: '#355746',
+                    }}>
                     {item.p_name}
-                     -
-                    {item.price}
+                    
+                     
+                    € {item.price}
+                    </div>
+                    <br></br>
                     <br></br>
                     <Button 
                     onClick={() => newCartItem(item.p_name, item.price)} 
-                    variant="outlined"
                     sx={{
                         backgroundColor: '#cd0f2a',
                         color: '#fff',
@@ -440,6 +403,33 @@ Sign In
                     </div>
                     ))
                     }
+                    <Button
+                        onClick={handleCheckOut}
+                        sx ={{
+                            backgroundColor: '#cd0f2a',
+                            color: '#fff',
+                            '&:hover': {
+                                backgroundColor: '#fff',
+                                color: '#cd0f2a',
+                            },
+                        }}>
+                        Checkout
+                    </Button>
+                   <IconButton
+                    onClick={handleCart}
+                    sx = {{
+                        position: 'fixed',
+                        bottom: '20px',
+                        right: '20px',
+                        backgroundColor: '#cd0f2a',
+                        color: '#fff',
+                        '&:hover': {
+                            backgroundColor: '#fff',
+                            color: '#cd0f2a',
+                        },
+                    }}>
+                          <ShoppingCartIcon />
+                   </IconButton>
                     </div>
                 </Box>
             )}

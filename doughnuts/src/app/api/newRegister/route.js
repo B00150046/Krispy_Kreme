@@ -1,7 +1,8 @@
 const { MongoClient, ServerApiVersion } = require('mongodb');
-
+import { getCustomSession } from '../sessionCode.js'
 export async function GET(req, res) {
 
+  let session = await getCustomSession()
 
   
   const { searchParams } = new URL(req.url)
@@ -25,9 +26,13 @@ export async function GET(req, res) {
 
    
 
+    session.email = email;
 
 
+    await session.save()
+    console.log("data saved")
 
+    
 return Response.json({"ok":""})
 
 
