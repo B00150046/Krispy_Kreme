@@ -1,18 +1,26 @@
 {
-  "name": "doughnuts",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "mongodb": "^6.10.0",
-    "next": "15.0.0",
-    "nodemailer": "^6.9.16",
-    "react": "19.0.0-rc-65a56d0e-20241020",
-    "react-dom": "19.0.0-rc-65a56d0e-20241020"
-  }
+"name": "my-app",
+"version": "0.1.0",
+"private": true,
+"scripts": {
+  "dev": "next dev",
+  "build": "next build",
+  "start": "next start",
+  "lint": "next lint"
+},
+"dependencies": {
+  "@emotion/react": "^11.13.3",
+  "@emotion/styled": "^11.13.0",
+  "@mui/icons-material": "^6.1.4",
+  "@mui/material": "^6.1.4",
+  "@mui/styled-engine-sc": "^6.1.4",
+  "@sendgrid/mail": "^8.1.4",
+  "email-validator": "^2.0.4",
+  "mailersend": "^2.3.0",
+  "mongodb": "^6.10.0",
+  "next": "14.2.13",
+  "react": "^18",
+  "react-dom": "^18",
+  "styled-components": "^6.1.13"
+}
 }
