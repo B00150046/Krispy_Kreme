@@ -22,7 +22,7 @@ const [order, setOrders] = useState([])
 
 
 const newCartItem = (pname, cost) => {
-    const url = `http://localhost:3000/api/newCartItem?pname=${pname}&price=${cost}`;
+    const url = `/api/newCartItem?pname=${pname}&price=${cost}`;
     
     console.log("Handling submit for:", url);
     runDBCallAsync(url);
@@ -39,7 +39,7 @@ useEffect(() => {
     
   
     
-    fetch('http://localhost:3000/api/getCart')
+    fetch('/api/getCart')
     .then((order) => order.json())
     .then((order) => {
         setOrders(order)

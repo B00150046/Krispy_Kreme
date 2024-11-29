@@ -39,7 +39,7 @@ export default function DoughnutApp() {
         const email = data.get('reg_email');
         const phone = data.get('reg_phone');
 
-        runDBCallAsync(`http://localhost:3000/api/newregister?name=${name}&email=${email}&phone=${phone}`);
+        runDBCallAsync(`/api/newregister?name=${name}&email=${email}&phone=${phone}`);
     };
 
     const handleNewLogin = (event) => {
@@ -48,7 +48,7 @@ export default function DoughnutApp() {
         const email = data.get('log_email');
         const password = data.get('log_password');
 
-        runDBCallAsync(`http://localhost:3000/api/getLogin?email=${email}&password=${password}`);
+        runDBCallAsync(`/api/getLogin?email=${email}&password=${password}`);
     };
 
     async function runDBCallAsync(url) {
@@ -66,11 +66,11 @@ export default function DoughnutApp() {
 
     // Fetch data on component mount
     useEffect(() => {
-        fetch('http://localhost:3000/api/getWeather')
+        fetch('/api/getWeather')
             .then((res) => res.json())
             .then((weather) => setWeatherData(weather));
 
-        fetch('http://localhost:3000/api/getData')
+        fetch('/api/getData')
             .then((res) => res.json())
             .then((data) => setData(data));
     }, []);
