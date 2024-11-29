@@ -56,7 +56,7 @@ useEffect(() => {
         console.log("session status" + data.data)
 
         if(data.data == false){
-            window.location = '/newregister'
+            window.location = '../'
         }
     })
     
@@ -87,7 +87,6 @@ useEffect(() => {
    const [showHome, setShowHome] = useState(true);
     const [showCart, setShowCart] = useState(false);
     const [showProducts, setShowProducts] = useState(false);
-    const [showCheckOut, setShowCheckout] = useState(false);
 
     
     function handleHome() {
@@ -109,12 +108,7 @@ useEffect(() => {
         setShowProducts(true);
         setShowCheckout(false)
     }
-    function handleCheckOut() {
-        setShowRegister(false);
-        setShowCart(false);
-        setShowProducts(false);
-        setShowCheckout(true)
-    } 
+    
 
     //____________________________________________________________________________________
     //if(!cart) return <p>No cart items sorry! </p>
@@ -265,7 +259,7 @@ useEffect(() => {
                     ))
                     }
                     <Button
-                        onClick={handleCheckOut}
+                        onClick={ window.location = '/CheckOut'}
                         sx ={{
                             backgroundColor: '#cd0f2a',
                             color: '#fff',
