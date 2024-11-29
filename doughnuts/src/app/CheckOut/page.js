@@ -127,7 +127,7 @@ let total = 0;
                     <div sx={{
                         size: 'small'
                     }}>  
-                    Today's temperature: {JSON.stringify(weather.temp)}
+                
                     </div>
                 </Toolbar>
             </AppBar>
