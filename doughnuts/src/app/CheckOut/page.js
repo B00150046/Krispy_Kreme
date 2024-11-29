@@ -57,13 +57,13 @@ let total = 0;
    
 
     function handleCart() {
-        setShowHome(false);
+;
         setShowCart(true);
         setShowProducts(false);
         setShowCheckout(false)
     }
     function handleProducts() {
-        setShowHome(false);
+
         setShowCart(false);
         setShowProducts(true);
         setShowCheckout(false)
@@ -134,16 +134,7 @@ let total = 0;
             <Container component="main" maxWidth="xs">
                
             </Container>
-            {showHome && (
-                <Box component="section" sx={{ p: 2, border: '1px dashed grey' }}>
-                    <Typography variant="h4" sx={{ textAlign: 'center' }}>
-                        Welcome to Doughnuts
-                    </Typography>
-                    <Typography variant="body1" sx={{ textAlign: 'center' }}>
-                        The best doughnuts in town!
-                    </Typography>
-                </Box>
-            )}
+         
 
 
             {showCart && (
