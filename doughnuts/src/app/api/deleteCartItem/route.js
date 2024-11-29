@@ -9,6 +9,7 @@ export async function GET(req, res) {
 
         // Validate inputs
         if (!p_name || isNaN(price)) {
+            return res.status(400).json({ error: "Invalid product name or price" });
         }
 
         // Connect to MongoDB
