@@ -1,5 +1,5 @@
 import { getCustomSession } from '../sessionCode.js'
-
+export const dynamic = 'forced-dynamic';
 export async function GET(req, res) {
  let session = await getCustomSession()
 

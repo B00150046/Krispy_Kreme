@@ -1,3 +1,4 @@
+export const dynamic = 'forced-dynamic';
 import { getCustomSession } from '../sessionCode';
 const { MongoClient, ServerApiVersion } = require('mongodb');
 

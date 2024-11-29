@@ -1,3 +1,4 @@
+export const dynamic = 'forced-dynamic';
 export async function GET(req, res) {
    
         const { searchParams } = new URL(req.url);
