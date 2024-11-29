@@ -15,11 +15,9 @@ import { Container, Icon, Table, TableContainer, TableHead } from '@mui/material
 
 
 export default function DoughnutApp() {
-const [data, setData] = useState([])
-const [pro, setProducts] = useState([])
-const [cart, setCart] = useState([])
+
 const [order, setOrders] = useState([])
-const [weather, setWeatherData] = useState(0)
+
 
 
 
@@ -51,18 +49,12 @@ useEffect(() => {
 let total = 0;
  //____________________________________________________________________________________
 //PAGES FOR MULTI-PAGE APP
-   const [showHome, setShowHome] = useState(false);
     const [showCart, setShowCart] = useState(false);
     const [showProducts, setShowProducts] = useState(false);
     const [showCheckOut, setShowCheckout] = useState(true);
 
     
-    function handleHome() {
-        setShowHome(true);
-        setShowCart(false);
-        setShowProducts(false);
-        setShowCheckout(false);
-    }
+   
 
     function handleCart() {
         setShowHome(false);
