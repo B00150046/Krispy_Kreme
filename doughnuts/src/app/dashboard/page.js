@@ -25,7 +25,7 @@ const [weather, setWeatherData] = useState(0)
 
 
 const newCartItem = (pname, cost) => {
-    const url = `http://localhost:3000/api/newCartItem?pname=${pname}&price=${cost}`;
+    const url = `/api/newCartItem?pname=${pname}&price=${cost}`;
     
     console.log("Handling submit for:", url);
     runDBCallAsync(url);
@@ -42,7 +42,7 @@ useEffect(() => {
 
 
         
-    fetch('http://localhost:3000/api/getData')
+    fetch('/api/getData')
     .then((data) => data.json())
     .then((data) => {
        
@@ -53,25 +53,25 @@ useEffect(() => {
         }
     })
     
-    fetch('http://localhost:3000/api/getWeather')
+    fetch('/api/getWeather')
     .then((weather) => weather.json())
     .then((weather) => {
         setWeatherData(weather)
     })
 
-        fetch('http://localhost:3000/api/getDoughnuts')
+        fetch('/api/getDoughnuts')
         .then((pro )=> pro.json())
         .then((pro) => {
         setProducts(pro)
     })
     
-    fetch('http://localhost:3000/api/ShoppingCart')
+    fetch('/api/ShoppingCart')
     .then((cart) => cart.json())
     .then((cart) => {
         setCart(cart)
     })
     
-    fetch('http://localhost:3000/api/getOrders')
+    fetch('/api/getOrders')
     .then((order) => order.json())
     .then((order) => {
         setOrders(order)
