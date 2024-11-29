@@ -32,6 +32,13 @@ const newCartItem = (pname, cost) => {
     alert("Item added to cart");
 };
 
+const deleteCartItem = (pname, cost) => {
+    const url = `/api/deleteCartItem?pname=${pname}&price=${cost}`;
+    console.log("Handling submit for:", url);
+    runDBCallAsync(url);
+    alert("Item removed from cart");
+};
+
   async function runDBCallAsync(url) {
     const res = await fetch(url);
     const data = await res.json();
@@ -71,11 +78,7 @@ useEffect(() => {
         setCart(cart)
     })
     
-    fetch('/api/getOrders')
-    .then((order) => order.json())
-    .then((order) => {
-        setOrders(order)
-    })
+    
 }, [])
 
 
@@ -291,11 +294,7 @@ useEffect(() => {
                     </div>
                 </Box>
             )}
-            {showCheckOut && (
-                <Box component="section" sx={{ p: 2, border: '1px dashed grey' }}>
-                    This could be the checkout page!
-                </Box>
-            )}
+           
         </Box>
     );
 }

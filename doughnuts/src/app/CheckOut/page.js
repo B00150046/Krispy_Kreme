@@ -33,6 +33,8 @@ useEffect(() => {
     .then((order) => {
         setOrders(order)
     })
+    
+
 }, [])
 
 let total = 0;
@@ -104,15 +106,7 @@ let total = 0;
             
             {showCheckOut && (
                 <Box component="section" sx={{ p: 2, border: '1px dashed grey' }}>
-                    <div
-                    sx = {{
-                        color: 'black',
-                        fontSize: '1.5em',
-                        textAlign: 'center',
-                        fontWeight: 'bold',
-                        marginBottom: '1em',
-                    }}
-                    > Buy your shit and leave</div>
+                    
                    
 
                     <TableContainer>
