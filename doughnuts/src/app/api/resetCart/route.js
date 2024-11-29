@@ -27,7 +27,7 @@ export async function GET(req, res) {
         const delResults = await col.deleteMany({});
 
         console.log(Resp);
-        return Response.json(Resp);
+        return Response.json("All items deleted!");
     
 
 }

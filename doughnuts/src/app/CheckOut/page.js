@@ -20,15 +20,6 @@ const [order, setOrders] = useState([])
 
 
 
-
-const newCartItem = (pname, cost) => {
-    const url = `/api/newCartItem?pname=${pname}&price=${cost}`;
-    
-    console.log("Handling submit for:", url);
-    runDBCallAsync(url);
-    alert("Item added to cart");
-};
-
   async function runDBCallAsync(url) {
     const res = await fetch(url);
     const data = await res.json();
@@ -36,8 +27,6 @@ const newCartItem = (pname, cost) => {
     }  
 
 useEffect(() => {
-    
-  
     
     fetch('/api/getCart')
     .then((order) => order.json())
@@ -49,31 +38,8 @@ useEffect(() => {
 let total = 0;
  //____________________________________________________________________________________
 //PAGES FOR MULTI-PAGE APP
-    const [showCart, setShowCart] = useState(false);
-    const [showProducts, setShowProducts] = useState(false);
-    const [showCheckOut, setShowCheckout] = useState(true);
-
-    
    
-
-    function handleCart() {
-;
-        setShowCart(true);
-        setShowProducts(false);
-        setShowCheckout(false)
-    }
-    function handleProducts() {
-
-        setShowCart(false);
-        setShowProducts(true);
-        setShowCheckout(false)
-    }
-    function handleCheckOut() {
-        setShowRegister(false);
-        setShowCart(false);
-        setShowProducts(false);
-        setShowCheckout(true)
-    } 
+    const [showCheckOut, setShowCheckout] = useState(true);
 
 
     order.map((item, i) => (
@@ -135,125 +101,19 @@ let total = 0;
                
             </Container>
          
-
-
-            {showCart && (
-                <Box component="section" sx={{ p: 2, border: '1px dashed grey' }}>
-                   <div>
-                          <h2>Shopping Cart</h2>
-                          <TableContainer>
-                            <Table>
-                                 <TableHead>
-                                      <tr>
-                                        <th>Item</th>
-                                        <th>Price</th>
-                                      </tr>
-                                 </TableHead>
-                                 <tbody>
-                                      {cart.map((item, i) => (
-                                        <tr key={i}>
-                                             <td>{item.item_name}</td>
-                                             <td>{item.price}</td>
-                                        </tr>
-                                      ))}
-                                 </tbody>
-                            </Table>
-                          </TableContainer>
-
-                
-                   </div>
-                </Box>
-            )}
             
-            {showProducts && (
-                
-                <Box component="section" sx={{ p: 2, }}>
-                    <Typography variant="h4" sx={{ textAlign: 'center' }}>
-                   
-                        Our Products
-                        </Typography>
-                    <div
-                    sx = {{
-                    //Display in a grid
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(3, 1fr)',
-                    gap: '20px',
-
-                    
-                    }}>
-                    {
-                     pro.map((item, i) => (
-                     <div style={{padding: '20px',
-                        margin: '20px',
-                        border: '3px solid #cd0f2a',
-                        background: '#b7edd4',
-                        alignContent: 'center',
-                        borderRadius: '5px',
-                        width: '175px',
-                     }} key={i} >
-                     <img src={item.img_src} alt={item.p_name} width={100} height={100} />
-                    <br></br>
-                    <div sx={{
-                        alignContent: 'center',
-                        fontFamily: 'Arial',
-                        fontSize: '1.5em',
-                        fontWeight: 'bold',
-                        color: '#355746',
-                    }}>
-                    {item.p_name}
-                    
-                     
-                    € {item.price}
-                    </div>
-                    <br></br>
-                    <br></br>
-                    <Button 
-                    onClick={() => newCartItem(item.p_name, item.price)} 
-                    sx={{
-                        backgroundColor: '#cd0f2a',
-                        color: '#fff',
-                        '&:hover': {
-                            backgroundColor: '#fff',
-                            color: '#cd0f2a',
-                        },
-                    }}
-                    > Add to cart </Button>
-                    </div>
-                    ))
-                    }
-                    <Button
-                        onClick={handleCheckOut}
-                        sx ={{
-                            backgroundColor: '#cd0f2a',
-                            color: '#fff',
-                            '&:hover': {
-                                backgroundColor: '#fff',
-                                color: '#cd0f2a',
-                            },
-                        }}>
-                        Checkout
-                    </Button>
-                   <IconButton
-                    onClick={handleCart}
-                    sx = {{
-                        position: 'fixed',
-                        bottom: '20px',
-                        right: '20px',
-                        backgroundColor: '#cd0f2a',
-                        color: '#fff',
-                        '&:hover': {
-                            backgroundColor: '#fff',
-                            color: '#cd0f2a',
-                        },
-                    }}>
-                          <ShoppingCartIcon />
-                   </IconButton>
-                    </div>
-                </Box>
-            )}
             {showCheckOut && (
                 <Box component="section" sx={{ p: 2, border: '1px dashed grey' }}>
-                    This could be the checkout page!
+                    <div
+                    sx = {{
+                        color: 'black',
+                        fontSize: '1.5em',
+                        textAlign: 'center',
+                        fontWeight: 'bold',
+                        marginBottom: '1em',
+                    }}
+                    > Buy your shit and leave</div>
+                   
 
                     <TableContainer>
                             <Table>

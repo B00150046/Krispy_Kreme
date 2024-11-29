@@ -134,6 +134,7 @@ useEffect(() => {
                     </IconButton>
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         <img
+                            onClick={handleHome}
                             src="/img/Logo.png"
                             alt="Doughnuts"
                             width={100}
