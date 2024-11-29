@@ -48,7 +48,7 @@ export default function DoughnutApp() {
         const email = data.get('log_email');
         const password = data.get('log_password');
 
-        runDBCallAsync(`https://krispy-kreme-yfm8-mxxxuenao-b00150046s-projects.vercel.app//api/getLogin?email=${email}&password=${password}`);
+        runDBCallAsync(`/api/getLogin?email=${email}&password=${password}`);
     };
 
     async function runDBCallAsync(url) {
