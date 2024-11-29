@@ -87,51 +87,10 @@ useEffect(() => {
                
             </Container>
             {showProfile && (
-                <Box component="section" sx={{ p: 2, border: '1px dashed grey' }}>
-                   <TableContainer component={Box}>
-                    <Table>
-                        <TableHead>
-                            <TableRow>
-                            <Tab>Order ID</Tab>
-                            <Tab>Product Name</Tab>
-                            <Tab>Price</Tab>
-                            <Tab>Sub Total</Tab>
-                            <Tab>-</Tab>
-                            </TableRow>
-                        </TableHead>
-                    <TableBody>
-                        {order.map((item, i) => (
-                            <React.Fragment key={i}>
-                                <TableRow>
-                                    <TableCell>{item.email_out}</TableCell>
-                                    <TableCell>{item.p_name}</TableCell>
-                                    <TableCell>{item.price}</TableCell>
-                                    <TableCell>{item.sub_total}</TableCell>
-                                    <TableCell>
-                                        <Button
-                                            onClick={() => deleteSession()}
-                                            variant="outlined"
-                                            sx={{
-                                                backgroundColor: '#cd0f2a',
-                                                color: '#fff',
-                                                '&:hover': {
-                                                    backgroundColor: '#fff',
-                                                    color: '#cd0f2a',
-                                                },
-                                            }}
-                                        >
-                                            Log Out
-                                        </Button>
-                                    </TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableCell>Total:</TableCell>
-                                </TableRow>
-                            </React.Fragment>
-                        ))}
-                    </TableBody>
-                    </Table>
-                    </TableContainer>
+                <Box>
+                    <h1>Profile</h1>
+                    <Button onClick={() => setShowProfile(false)}>Go to Orders</Button>
+                    
                 </Box>
             )}
            

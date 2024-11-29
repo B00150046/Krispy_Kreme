@@ -16,11 +16,11 @@ export async function GET(req, res) {
         //Move cart items to orders collection with email from session
         const session = await getCustomSession();
         const email = session.email;
-        const orders = col.map{item => ({
-            p_name = item.p_name,
-            p_price = item.p_price,
-            item.email = email,
-        })};
+        const orders = col.map(item => ({
+            p_name: item.p_name,
+            p_price: item.p_price,
+            email: email,
+        }));
         const addResults = await newCol.insertMany(orders);
         console.log(addResults);
         const delResults = await col.deleteMany({});
