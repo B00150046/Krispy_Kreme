@@ -29,19 +29,15 @@ export default function DoughnutApp() {
     };
 
     const deleteCartItem = async (pname, cost, timer) => {
-        // Convert the timer (Date object) to an ISO string
         const stringDate = timer.toISOString();
-    
-        // Construct the API URL with properly encoded parameters
         const url = `/api/deleteCartItem?item_name=${encodeURIComponent(pname)}&price=${cost}&time_added=${encodeURIComponent(stringDate)}`;
         console.log("Handling submit for:", url);
-    
+
         try {
             const response = await fetch(url, { method: 'GET' });
             const result = await response.json();
-    
+
             if (result && result.data === "Item successfully deleted") {
-                // Update the cart state to remove the deleted item
                 setCart(prevCart => prevCart.filter(
                     item => !(item.item_name === pname && item.price === cost && new Date(item.time_added).getTime() === timer.getTime())
                 ));
@@ -53,8 +49,6 @@ export default function DoughnutApp() {
             console.error("Error during deleteCartItem:", error);
             alert("An error occurred while removing the item.");
         }
-    };
-    
     };
 
     async function runDBCallAsync(url) {
@@ -91,7 +85,6 @@ export default function DoughnutApp() {
         fetchData();
     }, []);
 
-    // Page display logic for multi-page app
     const [showHome, setShowHome] = useState(true);
     const [showCart, setShowCart] = useState(false);
     const [showProducts, setShowProducts] = useState(false);
@@ -118,13 +111,7 @@ export default function DoughnutApp() {
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static" sx={{ backgroundColor: '#006938' }}>
                 <Toolbar>
-                    <IconButton
-                        size="large"
-                        edge="start"
-                        color="inherit"
-                        aria-label="menu"
-                        sx={{ mr: 2 }}
-                    >
+                    <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
@@ -137,16 +124,10 @@ export default function DoughnutApp() {
                             sx={{ flexGrow: 1, textAlign: 'center' }}
                         />
                     </Typography>
-                    <Button
-                        onClick={handleProducts}
-                        sx={{ color: '#355746', fontWeight: 'bold', '&:hover': { color: '#fff' } }}
-                    >
+                    <Button onClick={handleProducts} sx={{ color: '#355746', fontWeight: 'bold', '&:hover': { color: '#fff' } }}>
                         Products
                     </Button>
-                    <Button
-                        onClick={handleCart}
-                        sx={{ color: '#355746', fontWeight: 'bold', '&:hover': { color: '#fff' } }}
-                    >
+                    <Button onClick={handleCart} sx={{ color: '#355746', fontWeight: 'bold', '&:hover': { color: '#fff' } }}>
                         <ShoppingCartIcon />
                     </Button>
 
@@ -156,7 +137,6 @@ export default function DoughnutApp() {
                 </Toolbar>
             </AppBar>
 
-            {/* Cart Section */}
             {showCart && (
                 <Box component="section" sx={{ p: 2, border: '1px dashed grey' }}>
                     <h2>Shopping Cart</h2>
@@ -175,10 +155,7 @@ export default function DoughnutApp() {
                                             <td>{item.item_name}</td>
                                             <td>{item.price}</td>
                                             <td>
-                                                <Button
-                                                    onClick={() => deleteCartItem(item.item_name, item.price)}
-                                                    sx={{ backgroundColor: '#cd0f2a', color: '#fff', '&:hover': { backgroundColor: '#fff', color: '#cd0f2a' } }}
-                                                >
+                                                <Button onClick={() => deleteCartItem(item.item_name, item.price)} sx={{ backgroundColor: '#cd0f2a', color: '#fff', '&:hover': { backgroundColor: '#fff', color: '#cd0f2a' } }}>
                                                     Delete
                                                 </Button>
                                             </td>
@@ -186,9 +163,7 @@ export default function DoughnutApp() {
                                     ))
                                 ) : (
                                     <tr>
-                                        <td colSpan="3" style={{ textAlign: "center" }}>
-                                            Your cart is empty.
-                                        </td>
+                                        <td colSpan="3" style={{ textAlign: "center" }}>Your cart is empty.</td>
                                     </tr>
                                 )}
                             </TableBody>
@@ -198,7 +173,6 @@ export default function DoughnutApp() {
                 </Box>
             )}
 
-            {/* Products Section */}
             {showProducts && (
                 <Box component="section" sx={{ p: 2 }}>
                     <Typography variant="h4" sx={{ textAlign: 'center' }}>Our Products</Typography>
@@ -209,10 +183,7 @@ export default function DoughnutApp() {
                                 <div sx={{ fontFamily: 'Arial', fontSize: '1.5em', fontWeight: 'bold', color: '#355746' }}>
                                     {item.p_name} € {item.price}
                                 </div>
-                                <Button
-                                    onClick={() => newCartItem(item.p_name, item.price)}
-                                    sx={{ backgroundColor: '#cd0f2a', color: '#fff', '&:hover': { backgroundColor: '#fff', color: '#cd0f2a' } }}
-                                >
+                                <Button onClick={() => newCartItem(item.p_name, item.price)} sx={{ backgroundColor: '#cd0f2a', color: '#fff', '&:hover': { backgroundColor: '#fff', color: '#cd0f2a' } }}>
                                     Add to cart
                                 </Button>
                             </div>
@@ -220,7 +191,6 @@ export default function DoughnutApp() {
                     </div>
                 </Box>
             )}
-
         </Box>
     );
-
+}
