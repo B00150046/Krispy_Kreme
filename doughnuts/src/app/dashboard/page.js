@@ -125,6 +125,12 @@ export default function DoughnutApp() {
                     >
                         Products
                     </Button>
+                    <Button
+                        onClick={handleCart}
+                        sx={{ color: '#355746', fontWeight: 'bold', '&:hover': { color: '#fff' } }}
+                    >
+                        <ShoppingCartIcon />
+                    </Button>
 
                     <div sx={{ size: 'small' }}>
                         Today's temperature: {weather.temp}
