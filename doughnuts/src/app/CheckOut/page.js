@@ -15,7 +15,7 @@ import { Container, Icon, Table, TableContainer, TableHead } from '@mui/material
 
 
 export default function DoughnutApp() {
-
+    const [data, setData] = useState([])
 const [order, setOrders] = useState([])
 
 
@@ -33,7 +33,9 @@ useEffect(() => {
     .then((order) => {
         setOrders(order)
     })
-    
+    if(data.data == false){
+        window.location = '../'
+    }
 
 }, [])
 
@@ -137,6 +139,18 @@ let total = 0;
                           </TableContainer>
 
                           The order total is  {total.toFixed(2)}
+                          <Button
+                          onClick={sendReciept}
+                          sx = {{
+                                color: '#355746',
+                                //make font bold
+                                fontWeight: 'bold',
+                                '&:hover': {
+                                    color: '#fff',
+                                },
+                          }}>
+                            Buy Now
+                          </Button>
 
                 </Box>
             )}

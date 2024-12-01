@@ -193,6 +193,16 @@ useEffect(() => {
                                              <td>{item.price}</td>
                                         </tr>
                                       ))}
+                                      <Button onClick={deleteCartItem}
+                                      sx = {{
+                                            backgroundColor: '#cd0f2a',
+                                            color: '#fff',
+                                            '&:hover': {
+                                                backgroundColor: '#fff',
+                                                color: '#cd0f2a',
+                                            },
+                                      }}
+                                      >Delete</Button>
                                  </tbody>
                             </Table>
                           </TableContainer>
