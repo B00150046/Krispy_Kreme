@@ -12,58 +12,65 @@ export async function GET(req, res) {
     const uri = "mongodb+srv://root:lUJeU2iPcFlE53tb@database.gau0z.mongodb.net/?retryWrites=true&w=majority&appName=database";
     const client = new MongoClient(uri);
     await client.connect();
-    const db = client.db('Krispee');
-    const cart = db.collection('cart');
-    const orders = db.collection('orders');
 
-    //get all items in cart
+    const db = client.db("Krispee");
+    const cart = db.collection("cart");
+    const orders = db.collection("orders");
+
+    // Fetch cart items
     const cartItems = await cart.find({}).toArray();
+    if (!cartItems.length) {
+      return res.status(400).json({ error: "Cart is empty" });
+    }
 
-    //add all items to orders
-    const formattedCart = cartItems.map((item, i) =>
-        `${i + 1}. ${item.p_name} - €${item.price}`).join("\n");
+    // Format email body
+    const formattedCart = cartItems
+      .map((item, i) => `${i + 1}. ${item.p_name} - €${item.price}`)
+      .join("\n");
 
     const emailBody = `
-        Hello ${email},
-        
-        Thank you for your purchase! Here are the items in your order:
-        
-        ${formattedCart}
-        
-        Total Items: ${cartItems.length}
-        
-        We appreciate your business!
+      Hello ${nuEmail},
+
+      Thank you for your purchase! Here are the items in your order:
+
+      ${formattedCart}
+
+      Total Items: ${cartItems.length}
+
+      We appreciate your business!
     `;
 
-    // Step 5: Send email using MailerSend
-    const mailersend = new MailerSend({
-        apiKey: "mlsn.09177e0f860d9743df1644ed424ef6eee0ef50aa5ede162659fc84b37c40b75c",
-    });
+    // Send email
+    const mailersend = new MailerSend({ apiKey: process.env.MAILERSEND_API_KEY });
+    const recipient = new Recipient(nuEmail);
+    const emailParams = new EmailParams()
+      .setFrom("info@domain.com")
+      .setFromName("Krispy Kreme")
+      .setRecipients([recipient])
+      .setSubject("Your Order Receipt")
+      .setHtml(emailBody.replace(/\n/g, "<br>"))
+      .setText(emailBody);
 
-const Reci = require("mailersend").Recipient;
-const EmailParams = require("mailersend").EmailParams;
-const MailerSend = require("mailersend");
+    await mailersend.send(emailParams);
 
-const emailParams = new EmailParams()
-    .setFrom("info@domain.com")
-    .setFromName("Your Name")
-    .setRecipients(Reci)
-    .setSubject("Subject")
-    .setHtml(emailBody)
-    .setText(emailBody.replace(/\n/g, "<br>"));
+    // Move cart items to orders
+    await Promise.all(
+      cartItems.map((item) =>
+        orders.insertOne({
+          p_name: item.p_name,
+          price: item.price,
+          email: nuEmail,
+        })
+      )
+    );
 
-await mailersend.send(emailParams);
+    // Clear cart and destroy session
+    await cart.deleteMany({});
+    session.destroy();
 
-//Move all items from cart to orders with email from session
-await Promise.all(cartItems.map(async (item) => {
-    await orders.insertOne({
-        p_name: item.p_name,
-        price: item.price,
-        email: nuEmail
-    });
-}));
-await cart.deleteMany({});
+    await client.close();
 
-session.destroy()
-await client.close();
-}
+    return res.status(200).json({ message: "Receipt sent and order processed" });
+ 
+  }
+
