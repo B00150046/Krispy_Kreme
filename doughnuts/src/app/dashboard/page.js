@@ -220,9 +220,19 @@ useEffect(() => {
 
                             </Table>
                           </TableContainer>
+                          <Button sx = {{
+                                backgroundColor: '#cd0f2a',
+                                color: '#fff',
+                                '&:hover': {
+                                    backgroundColor: '#fff',
+                                    color: '#cd0f2a',
+                                },
+                          }}
+                          onClick={() => {window.location = '/CheckOut'}}>
+                          Checkout</Button>
                    </div>
 
-                   <Link href="/CheckOut">Checkout</Link>
+                 
                 </Box>
             )}
             

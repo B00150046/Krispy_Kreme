@@ -67,6 +67,47 @@ export default function CheckoutPage() {
 
     return (
         <Box sx={{ p: 4 }}>
+             <AppBar position="static" sx={{ backgroundColor: '#006938' }}>
+                <Toolbar>
+                    <IconButton
+                        size="large"
+                        edge="start"
+                        color="inherit"
+                        aria-label="menu"
+                        sx={{ mr: 2 }}
+                    >
+                        <MenuIcon />
+                    </IconButton>
+                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                        <img
+                            onClick={handleHome}
+                            src="/img/Logo.png"
+                            alt="Doughnuts"
+                            width={100}
+                            height={40}
+                            sx={{ flexGrow: 1, textAlign: 'center' }}
+                        />
+                    </Typography>
+                    <Button
+                        onClick={handleProducts}
+                        sx ={{
+                            color: '#355746',
+                            //make font bold
+                            fontWeight: 'bold',
+                            '&:hover': {
+                                color: '#fff',
+                            },
+                        }}>
+                        Products
+                    </Button>
+                    
+                    <div sx={{
+                        size: 'small'
+                    }}>  
+                    Today's temperature: {JSON.stringify(weather.temp)}
+                    </div>
+                </Toolbar>
+            </AppBar>
           
             <TableContainer>
                 <Table>
