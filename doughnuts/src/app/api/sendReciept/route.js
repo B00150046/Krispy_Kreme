@@ -1,15 +1,23 @@
 //This is supposed to delete everything on cart table and movie it to orders table with the current sessions email added to it, it also sends an email confirmining your purchase
 //import { resetCart} from '../../route.js'
 //mlsn.09177e0f860d9743df1644ed424ef6eee0ef50aa5ede162659fc84b37c40b75c bnh
+
 export const dynamic = 'forced-dynamic';
-import { getCustomSession } from "../sessionCode";
-export async function GET(req, res) {
-    //get email address from current session
-    const session = req.session;
-    const nuEmail = session.email;
-    if (!nuEmail){
-        return res.json({"error":"no email"})
+import { MongoClient } from "mongodb";
+import { MailerSend, Recipient, EmailParams } from "mailersend";
+import { getCustomSession } from "../sessionCode.js";
+export default async function handler(req, res) {
+    if (req.method !== "POST") {
+        return res.status(405).json({ error: "Method Not Allowed" });
     }
+
+    //get email address from current session
+    const session = await getCustomSession(req);
+    console.log("Session in API:", session); // Debug session content
+    if (!session || !session.email) {
+        return res.status(401).json({ error: "Unauthorized: No email in session" });
+    }
+    const nuEmail = session.email;
 
     const uri = "mongodb+srv://root:lUJeU2iPcFlE53tb@database.gau0z.mongodb.net/?retryWrites=true&w=majority&appName=database";
     const client = new MongoClient(uri);
@@ -25,54 +33,59 @@ export async function GET(req, res) {
       return res.status(400).json({ error: "Cart is empty" });
     }
 
-    // Format email body
+   
     const formattedCart = cartItems
-      .map((item, i) => `${i + 1}. ${item.p_name} - €${item.price}`)
-      .join("\n");
+    .map((item, i) => `${i + 1}. ${item.p_name} - €${item.price}`)
+    .join("\n");
 
-    const emailBody = `
-      Hello ${nuEmail},
+const emailBody = `
+    Hello ${nuEmail},
 
-      Thank you for your purchase! Here are the items in your order:
+    Thank you for your purchase! Here are the items in your order:
 
-      ${formattedCart}
+    ${formattedCart}
 
-      Total Items: ${cartItems.length}
+    Total Items: ${cartItems.length}
 
-      We appreciate your business!
-    `;
+    We appreciate your business!
+`;
 
-    // Send email
-    const mailersend = new MailerSend({ apiKey: process.env.MAILERSEND_API_KEY });
-    const recipient = new Recipient(nuEmail);
-    const emailParams = new EmailParams()
-      .setFrom("info@domain.com")
-      .setFromName("Krispy Kreme")
-      .setRecipients([recipient])
-      .setSubject("Your Order Receipt")
-      .setHtml(emailBody.replace(/\n/g, "<br>"))
-      .setText(emailBody);
+const mailersend = new MailerSend({ apiKey: process.env.MAILERSEND_API_KEY });
+const recipient = new Recipient(nuEmail);
+const emailParams = new EmailParams()
+    .setFrom("info@domain.com")
+    .setFromName("Krispy Kreme")
+    .setRecipients([recipient])
+    .setSubject("Your Order Receipt")
+    .setHtml(emailBody.replace(/\n/g, "<br>"))
+    .setText(emailBody);
 
-    await mailersend.send(emailParams);
+await mailersend.send(emailParams);
 
-    // Move cart items to orders
-    await Promise.all(
-      cartItems.map((item) =>
+await Promise.all(
+    cartItems.map((item) =>
         orders.insertOne({
-          p_name: item.p_name,
-          price: item.price,
-          email: nuEmail,
+            p_name: item.p_name,
+            price: item.price,
+            email: nuEmail,
         })
-      )
-    );
+    )
+);
 
-    // Clear cart and destroy session
-    await cart.deleteMany({});
-    session.destroy();
+await cart.deleteMany({});
+session.destroy();
 
-    await client.close();
+await client.close();
+return res.status(200).json({ message: "Receipt sent and order processed" });
+} 
+  
 
-    return res.status(200).json({ message: "Receipt sent and order processed" });
- 
-  }
+
+
+
+     
+       
+
+       
+
 
