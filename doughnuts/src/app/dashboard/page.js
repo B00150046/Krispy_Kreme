@@ -186,25 +186,38 @@ useEffect(() => {
                                         <th>Price</th>
                                       </tr>
                                  </TableHead>
-                                 <tbody>
-                                      {cart.map((item, i) => (
-                                        <tr key={i}>
-                                             <td>{item.item_name}</td>
-                                             <td>{item.price}</td>
-                                             <Button onClick={deleteCartItem}
-                                      sx = {{
-                                            backgroundColor: '#cd0f2a',
-                                            color: '#fff',
-                                            '&:hover': {
-                                                backgroundColor: '#fff',
-                                                color: '#cd0f2a',
-                                            },
-                                      }}
-                                      >Delete</Button>
-                                        </tr>
-                                      ))}
-                                     
-                                 </tbody>
+                                 <TableBody>
+    {cart && cart.length > 0 ? (
+        cart.map((item, i) => (
+            <tr key={i}>
+                <td>{item.item_name}</td>
+                <td>{item.price}</td>
+                <td>
+                    <Button
+                        onClick={() => deleteCartItem(item.item_name, item.price)}
+                        sx={{
+                            backgroundColor: '#cd0f2a',
+                            color: '#fff',
+                            '&:hover': {
+                                backgroundColor: '#fff',
+                                color: '#cd0f2a',
+                            },
+                        }}
+                    >
+                        Delete
+                    </Button>
+                </td>
+            </tr>
+        ))
+    ) : (
+        <tr>
+            <td colSpan="3" style={{ textAlign: "center" }}>
+                Your cart is empty.
+            </td>
+        </tr>
+    )}
+</TableBody>
+
                             </Table>
                           </TableContainer>
                    </div>
