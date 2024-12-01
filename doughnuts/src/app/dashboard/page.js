@@ -13,7 +13,6 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Container, Table, TableBody, TableContainer, TableHead } from '@mui/material';
 
 export default function DoughnutApp() {
-    const [data, setData] = useState([]);
     const [pro, setProducts] = useState([]);
     const [cart, setCart] = useState([]);
     const [weather, setWeatherData] = useState(0);
@@ -116,7 +115,8 @@ export default function DoughnutApp() {
 
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static" sx={{ backgroundColor: '#006938' }}>
+           
+        <AppBar position="static" sx={{ backgroundColor: '#006938' }}>
                 <Toolbar>
                     <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
                         <MenuIcon />
@@ -143,7 +143,26 @@ export default function DoughnutApp() {
                     </div>
                 </Toolbar>
             </AppBar>
-
+            {showHome && (
+                <Box component="section" sx={{ p: 2 }}>
+                    <Typography variant="h4" sx={{ textAlign: 'center',
+                        fontFamily: 'Arial',
+                        fontSize: '2em',
+                        fontWeight: 'bold',
+                        color: '#355746',
+                        textTransform: 'uppercase', 
+                       
+                    }}>Welcome to Doughnuts</Typography>
+                    <Typography variant="h6" sx={{ textAlign: 'center',
+                        fontFamily: 'Arial',
+                        fontSize: '1.5em',
+                        fontWeight: 'bold',
+                        color: '#355746',
+                        textTransform: 'uppercase',
+                     }}>The best doughnuts in town</Typography>
+                    <img src="/img/doughnuts.jpg" alt="Doughnuts" width={500} height={300} sx={{ display: 'block', margin: 'auto' }} />
+                </Box>
+            )}
             {showCart && (
                 <Box component="section" sx={{ p: 2, border: '1px dashed grey' }}>
                     <h2>Shopping Cart</h2>
