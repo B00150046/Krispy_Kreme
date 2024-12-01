@@ -66,7 +66,7 @@ export default function CheckoutPage() {
     };
 
     return (
-        <Box sx={{ p: 4 }}>
+        <Box sx={{ p: 4, backgroundColor: '#d0f0c0', border: '2px solid #006938', color: '#000' }}>
              <AppBar position="static" sx={{ backgroundColor: '#006938' }}>
                 <Toolbar>
                     <IconButton
@@ -88,9 +88,6 @@ export default function CheckoutPage() {
                             sx={{ flexGrow: 1, textAlign: 'center' }}
                         />
                     </Typography>
-                   
-                    
-                   
                 </Toolbar>
             </AppBar>
           
