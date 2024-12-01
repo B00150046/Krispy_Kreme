@@ -29,14 +29,21 @@ export default function DoughnutApp() {
     };
 
     const deleteCartItem = async (pname, cost, timer) => {
+        if (!timer || !(timer instanceof Date) || isNaN(timer.getTime())) {
+            console.error("Invalid timer passed to deleteCartItem");
+            alert("An error occurred while processing the deletion.");
+            return;
+        }
+    
         const stringDate = timer.toISOString();
+    
         const url = `/api/deleteCartItem?item_name=${encodeURIComponent(pname)}&price=${cost}&time_added=${encodeURIComponent(stringDate)}`;
         console.log("Handling submit for:", url);
-
+    
         try {
             const response = await fetch(url, { method: 'GET' });
             const result = await response.json();
-
+    
             if (result && result.data === "Item successfully deleted") {
                 setCart(prevCart => prevCart.filter(
                     item => !(item.item_name === pname && item.price === cost && new Date(item.time_added).getTime() === timer.getTime())
