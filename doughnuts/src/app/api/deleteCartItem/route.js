@@ -14,9 +14,10 @@ export async function GET(req, res) {
 
         // Connect to MongoDB
         const { MongoClient } = require('mongodb');
-        const uri = process.env.MONGODB_URI;
+        const uri = "mongodb+srv://root:lUJeU2iPcFlE53tb@database.gau0z.mongodb.net/?retryWrites=true&w=majority&appName=database";
         const client = new MongoClient(uri);
         const dbName = 'Krispee';
+        
 
         await client.connect();
         console.log('Connected successfully to server');
@@ -24,11 +25,10 @@ export async function GET(req, res) {
         const db = client.db(dbName);
         const collection = db.collection('cart'); // Collection for cart items
 
-        // Insert product into the cart collection
-        const result = await collection.deleteOne({
-            item_name: p_name,
-            price: price,
-        });
+        // Delete item selected
+        const result = await collection.deleteOne({ 
+            p_name:p_name,
+             price: price });
 
         console.log('Insert Result:', result);
 
