@@ -6,10 +6,8 @@ export const dynamic = 'forced-dynamic';
 import { MongoClient } from "mongodb";
 import { MailerSend, Recipient, EmailParams } from "mailersend";
 import { getCustomSession } from "../sessionCode.js";
-export default async function handler(req, res) {
-    if (req.method !== 'POST') {
-        return res.status(405).json({ error: 'Method Not Allowed. Use POST instead.' });
-    }
+export default async function POST (req, res) {
+    
 try{
     //get email address from current session
     const session = await getCustomSession(req);
