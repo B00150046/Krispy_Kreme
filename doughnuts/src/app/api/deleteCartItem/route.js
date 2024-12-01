@@ -1,18 +1,17 @@
+export const dynamic = 'forced-dynamic';
 export async function GET(req, res) {
-    try {
+   
         const { searchParams } = new URL(req.url);
-        const p_name = searchParams.get('item_name');
-        const price = parseFloat(searchParams.get('price'));
-        const time_added = searchParams.get('time_added');
+        const p_name = searchParams.get('pname');
+        //Get time of product added
+        const time = searchParams.get('time_added  ');
+        const price = parseFloat(searchParams.get('price')); // Ensure price is a number
+
+        console.log(`Product Name: ${p_name}, Price: ${price}`);
 
         // Validate inputs
-        if (!p_name || isNaN(price) || !time_added) {
-            return res.status(400).json({ error: "Invalid request parameters" });
-        }
-
-        const parsedTime = new Date(time_added);
-        if (isNaN(parsedTime.getTime())) {
-            return res.status(400).json({ error: "Invalid time format" });
+        if (!p_name || isNaN(price)) {
+            return res.status(400).json({ error: "Invalid product name or price" });
         }
 
         // Connect to MongoDB
@@ -20,27 +19,23 @@ export async function GET(req, res) {
         const uri = "mongodb+srv://root:lUJeU2iPcFlE53tb@database.gau0z.mongodb.net/?retryWrites=true&w=majority&appName=database";
         const client = new MongoClient(uri);
         const dbName = 'Krispee';
+        
 
         await client.connect();
         console.log('Connected successfully to server');
 
         const db = client.db(dbName);
-        const collection = db.collection('cart');
+        const collection = db.collection('cart'); // Collection for cart items
 
-        // Delete the specified cart item
-        const result = await collection.deleteOne({
-            item_name: p_name,
-            price: price,
-            time_added: parsedTime.toISOString()
+        // Delete item selected
+        const result = await collection.deleteOne({ 
+            item_name:p_name,
+            time_added: time
         });
 
-        if (result.deletedCount === 1) {
-            return res.status(200).json({ data: "Item successfully deleted" });
-        } else {
-            return res.status(404).json({ error: "Item not found" });
-        }
-    } catch (error) {
-        console.error("Error deleting item:", error);
-        return res.status(500).json({ error: "Internal server error" });
+        console.log('Insert Result:', result);
+
+
+        return Response.json({"data":"added"})
+
     }
-}

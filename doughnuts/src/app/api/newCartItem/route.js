@@ -1,13 +1,12 @@
 export const dynamic = 'forced-dynamic';
-
 export async function GET(req, res) {
-    try {
+   
         const { searchParams } = new URL(req.url);
         const p_name = searchParams.get('pname');
         const price = parseFloat(searchParams.get('price')); // Ensure price is a number
-        const time = new Date().toISOString(); // Use ISO format for consistency
+        const time = new Date().toLocaleString();
 
-        console.log(`Product Name: ${p_name}, Price: ${price}, Time Added: ${time}`);
+        console.log(`Product Name: ${p_name}, Price: ${price}`);
 
         // Validate inputs
         if (!p_name || isNaN(price)) {
@@ -30,15 +29,12 @@ export async function GET(req, res) {
         const result = await collection.insertOne({
             item_name: p_name,
             price: price,
-            time_added: time
+            time
         });
 
         console.log('Insert Result:', result);
 
-        // Send success response
-        return res.status(200).json({ data: "Item added to cart" });
-    } catch (error) {
-        console.error('Error processing request:', error);
-        return res.status(500).json({ error: "Internal server error" });
+
+        return Response.json({"data":"added"})
+
     }
-}
