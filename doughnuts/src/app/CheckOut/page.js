@@ -65,6 +65,20 @@ export default function CheckoutPage() {
             }
     };
 
+    const deleteSession = async () => {
+        const response = await fetch('/api/deleteSession');
+        console.log(response);
+        console.log(response.ok);
+        console.log(response.status);
+        console.log(response.statusText);
+        
+        if (response.ok) {
+            window.location = '/';
+        } else {
+            const errorResponse = await response.json();
+            alert(`Failed to delete session: ${errorResponse.error}`);
+        }
+    }
     return (
      
         <div>
