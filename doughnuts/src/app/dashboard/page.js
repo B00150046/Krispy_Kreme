@@ -19,7 +19,7 @@ export default function DoughnutApp() {
     const [weather, setWeatherData] = useState(0);
 
     const newCartItem = async (pname, cost) => {
-        const url = `/api/newCartItem?pname=${pname}&price=${cost}`;
+        const url = `/api/newCartItem?pname=${pname}&price=${cost}&time_added=${new Date().toLocaleString()}`;
         console.log("Handling submit for:", url);
         const result = await runDBCallAsync(url);
         if (result) {
@@ -28,8 +28,8 @@ export default function DoughnutApp() {
         }
     };
 
-    const deleteCartItem = async (pname, cost) => {
-        const url = `/api/deleteCartItem?pname=${pname}&price=${cost}`;
+    const deleteCartItem = async (pname, cost, timer) => {
+        const url = `/api/deleteCartItem?pname=${pname}&price=${cost}&time_added=${timer}`;
         console.log("Handling submit for:", url);
         const result = await runDBCallAsync(url);
         if (result) {
