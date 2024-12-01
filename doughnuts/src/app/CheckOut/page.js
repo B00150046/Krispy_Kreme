@@ -47,8 +47,8 @@ export default function CheckoutPage() {
     }, []);
 
     const handleBuyNow = async () => {
-        try {
-            const response = await fetch('../api/sendReciept', {
+        
+            const response = await fetch('/api/sendReciept', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -59,14 +59,11 @@ export default function CheckoutPage() {
                 alert("Purchase successful!");
                 setCart([]);
                 setTotal(0);
-            } else {
+         
                 const errorResponse = await response.json();
                 alert(`Failed to purchase: ${errorResponse.error}`);
             }
-        } catch (error) {
-            console.error("Error:", error);
-            alert("An error occurred. Please try again.");
-        }
+       
     
     };
 

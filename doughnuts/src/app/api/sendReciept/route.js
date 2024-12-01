@@ -8,13 +8,10 @@ import { MailerSend, Recipient, EmailParams } from "mailersend";
 import { getCustomSession } from "../sessionCode.js";
 export default async function POST (req, res) {
     
-try{
+
     //get email address from current session
     const session = await getCustomSession(req);
-    console.log("Session in API:", session); // Debug session content
-    if (!session || !session.email) {
-        return res.status(401).json({ error: "Unauthorized: No email in session" });
-    }
+    
     const nuEmail = session.email;
 
     const uri = "mongodb+srv://root:lUJeU2iPcFlE53tb@database.gau0z.mongodb.net/?retryWrites=true&w=majority&appName=database";
@@ -76,10 +73,7 @@ session.destroy();
 await client.close();
 return res.status(200).json({ message: "Receipt sent and order processed" });
 
-} catch (error) {
-    console.error('Error:', error);
-    return res.status(500).json({ error: 'Internal Server Error' });
-}
+
 }
 
   
