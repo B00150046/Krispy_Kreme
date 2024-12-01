@@ -6,11 +6,11 @@ export async function GET(req, res) {
     const time = searchParams.get('time_added');
     const price = parseFloat(searchParams.get('price')); // Ensure price is a number
 
-    console.log(`Product Name: ${p_name}, Price: ${price}, Time Added: ${time}`);
+    console.log(`Delete Request - Product Name: ${p_name}, Price: ${price}, Time: ${time}`);
 
     // Validate inputs
-    if (!p_name || isNaN(price) || !time) {
-        return res.status(400).json({ error: "Invalid product name, price, or time_added" });
+    if (!p_name || isNaN(price)) {
+        return res.status(400).json({ error: "Invalid product name or price" });
     }
 
     // Connect to MongoDB
@@ -18,7 +18,7 @@ export async function GET(req, res) {
     const uri = "mongodb+srv://root:lUJeU2iPcFlE53tb@database.gau0z.mongodb.net/?retryWrites=true&w=majority&appName=database";
     const client = new MongoClient(uri);
     const dbName = 'Krispee';
-
+    
     try {
         await client.connect();
         console.log('Connected successfully to server');
@@ -26,25 +26,24 @@ export async function GET(req, res) {
         const db = client.db(dbName);
         const collection = db.collection('cart'); // Collection for cart items
 
-        // Delete the item based on product name and time added
+        // Delete item selected using a more specific condition (including time_added)
         const result = await collection.deleteOne({ 
             item_name: p_name,
-            time_added: time
+            time_added: time,
+            price: price
         });
 
-        // Check the result of the deletion
+        console.log('Delete Result:', result);  // Log the result of the delete operation
+        
         if (result.deletedCount === 1) {
-            console.log('Successfully deleted the item');
+            console.log('Item successfully deleted');
             return res.status(200).json({ data: "Item successfully deleted" });
         } else {
-            console.log('No matching item found to delete');
+            console.log('Item not found for deletion');
             return res.status(404).json({ error: "Item not found" });
         }
-
     } catch (err) {
-        console.error('Error during database operation:', err);
-        return res.status(500).json({ error: "Internal server error" });
-    } finally {
-        await client.close(); // Ensure the connection is closed after operation
+        console.error('Error deleting item:', err);
+        return res.status(500).json({ error: "Failed to delete item" });
     }
 }
