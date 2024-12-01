@@ -29,7 +29,7 @@ export default function DoughnutApp() {
     };
 
     const deleteCartItem = async (pname, cost, timer) => {
-        const stringDate = timer.toLocaleString();
+        const stringDate = timer.toISOString();
         const url = `/api/deleteCartItem?item_name=${pname}&price=${cost}&time_added=${encodeURIComponent(stringDate)}`;
         console.log("Handling submit for:", url);
         const result = await runDBCallAsync(url);
