@@ -2,7 +2,7 @@ export const dynamic = 'forced-dynamic';
 export async function GET(req, res) {
    
         const { searchParams } = new URL(req.url);
-        const p_name = searchParams.get('pname');
+       
         //Get time of product added
         const time = searchParams.get('time_added');
         const price = parseFloat(searchParams.get('price')); // Ensure price is a number
@@ -29,7 +29,7 @@ export async function GET(req, res) {
 
         // Delete item selected
         const result = await collection.deleteOne({ 
-            item_name:p_name,
+           
             
             time_added: time
         });
