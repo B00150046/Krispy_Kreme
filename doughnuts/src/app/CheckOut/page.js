@@ -80,7 +80,7 @@ export default function CheckoutPage() {
                     </IconButton>
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         <img
-                            onClick={handleHome}
+                            onClick={window.location = '../dashboard'}
                             src="/img/Logo.png"
                             alt="Doughnuts"
                             width={100}
