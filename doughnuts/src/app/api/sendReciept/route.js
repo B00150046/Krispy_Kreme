@@ -9,7 +9,7 @@ export async function GET(req, res) {
         return res.json({"error":"no email"})
     }
 
-    const uri = process.env.MONGODB_URI;
+    const uri = "mongodb+srv://root:lUJeU2iPcFlE53tb@database.gau0z.mongodb.net/?retryWrites=true&w=majority&appName=database";
     const client = new MongoClient(uri);
     await client.connect();
     const db = client.db('Krispee');
