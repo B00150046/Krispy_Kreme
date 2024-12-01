@@ -1,30 +1,30 @@
 'use client';
 
-import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
+import * as React from 'react'; // Namespace import for React
+import {
+    AppBar,
+    Box,
+    Toolbar,
+    Typography,
+    Button,
+    IconButton,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import TextField from '@mui/material/TextField';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { Container, Icon, Table, TableContainer, TableHead } from '@mui/material';
-
-import { useState, useEffect } from "react";
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button, Typography, Box } from '@mui/material';
 
 export default function CheckoutPage() {
-    const [cart, setCart] = useState([]);
-    const [total, setTotal] = useState(0);
+    const [cart, setCart] = React.useState([]);
+    const [total, setTotal] = React.useState(0);
 
-    // Fetch cart data
-    useEffect(() => {
+    React.useEffect(() => {
         fetch('/api/ShoppingCart')
             .then((res) => res.json())
             .then((data) => {
-                console.log("Fetched cart:", data); // Debug log
                 setCart(data);
                 const totalAmount = data.reduce((sum, item) => sum + item.price, 0);
                 setTotal(totalAmount);
@@ -34,23 +34,35 @@ export default function CheckoutPage() {
             });
     }, []);
 
-    // Handle Buy Now
-    const handleSendReciept = () => {
-        fetch('/api/sendReciept')
-            .then((res) => res.json())
-            .then((data) => {
-                console.log("Reciept sent:", data); // Debug log
-            })
-            .catch((error) => {
-                console.error("Error sending reciept:", error);
-            });
+    const handleBuyNow = async () => {
+        try {
+            const response = await fetch('/api/sendReciept');
+            if (response.ok) {
+                alert("Purchase successful!");
+                setCart([]);
+                setTotal(0);
+            } else {
+                const result = await response.json();
+                alert(`Failed to purchase: ${result.error}`);
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            alert("An error occurred. Please try again.");
+        }
     };
 
     return (
         <Box sx={{ p: 4 }}>
-            <Typography variant="h4" sx={{ mb: 4 }}>
-                Checkout
-            </Typography>
+            <AppBar position="static">
+                <Toolbar>
+                    <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
+                        <MenuIcon />
+                    </IconButton>
+                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                        Checkout
+                    </Typography>
+                </Toolbar>
+            </AppBar>
 
             <TableContainer>
                 <Table>
@@ -84,7 +96,7 @@ export default function CheckoutPage() {
             </Typography>
 
             <Button
-                onClick={handleSendReciept}
+                onClick={handleBuyNow}
                 sx={{
                     mt: 2,
                     backgroundColor: '#cd0f2a',
