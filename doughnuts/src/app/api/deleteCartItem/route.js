@@ -6,7 +6,7 @@ export async function GET(req, res) {
     const price = parseFloat(searchParams.get('price')); // Ensure price is a number
     const time = searchParams.get('time_added');
 
-    console.log(`Delete Request - Product Name: ${p_name}, Price: ${price}, Time: ${time}`);
+   
 
     // Validate inputs
     if (!p_name || isNaN(price)) {
@@ -29,8 +29,8 @@ export async function GET(req, res) {
         // Delete item selected using a more specific condition (including time_added)
         const result = await collection.deleteOne({ 
             item_name: p_name,
-            time_added: time,
-            price: price
+            price: price,
+            time_added: time
         });
 
         console.log('Delete Result:', result);  // Log the result of the delete operation
