@@ -1,10 +1,9 @@
 export default async function POST(req, res) {
-    try {
-        // Get email address from current session
+   
         const session = await getCustomSession(req);
         const nuEmail = session.email;
 
-        // MongoDB client setup
+       //Connect
         const uri = "mongodb+srv://root:lUJeU2iPcFlE53tb@database.gau0z.mongodb.net/?retryWrites=true&w=majority&appName=database";
         const client = new MongoClient(uri);
         await client.connect();
@@ -13,13 +12,13 @@ export default async function POST(req, res) {
         const cart = db.collection("cart");
         const orders = db.collection("orders");
 
-        // Fetch cart items filtered by email
+       // Get cart items
         const cartItems = await cart.find({ email: nuEmail }).toArray();
         if (!cartItems.length) {
             return res.status(400).json({ error: "Cart is empty" });
         }
 
-        // Format cart items for email
+        //Add em to the email
         const formattedCart = cartItems
             .map((item, i) => `${i + 1}. ${item.p_name} - €${item.price}`)
             .join("\n");
@@ -71,8 +70,5 @@ export default async function POST(req, res) {
         await client.close();
 
         return res.status(200).json({ message: "Receipt sent and order processed" });
-    } catch (error) {
-        console.error("Error processing order:", error);
-        return res.status(500).json({ error: "Failed to process order" });
-    }
+   
 }

@@ -84,7 +84,18 @@ return (
         </AppBar>
         <Container>
             <Box sx={{ flexGrow: 1 }}>
-                <TableContainer>
+                <TableContainer
+                sx={{
+                    backgroundColor: '#ffe4e1',
+                    padding: '20px',
+                    margin: '20px',
+                    borderRadius: '10px',
+                    boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+                    transition: '0.3s',
+                    '&:hover': {
+                        boxShadow: '0 8px 16px rgba(0,0,0,0.1)'
+                    }
+                }}>
                     <Table>
                         <TableHead>
                             <tr>
