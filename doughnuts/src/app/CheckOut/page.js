@@ -88,18 +88,7 @@ export default function CheckoutPage() {
                             sx={{ flexGrow: 1, textAlign: 'center' }}
                         />
                     </Typography>
-                    <Button
-                        onClick={handleProducts}
-                        sx ={{
-                            color: '#355746',
-                            //make font bold
-                            fontWeight: 'bold',
-                            '&:hover': {
-                                color: '#fff',
-                            },
-                        }}>
-                        Products
-                    </Button>
+                   
                     
                     <div sx={{
                         size: 'small'
