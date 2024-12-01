@@ -12,7 +12,7 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import TextField from '@mui/material/TextField';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { Container, Icon, Table, TableContainer, TableHead } from '@mui/material';
+import { Container, Icon, Table, TableBody,TableContainer, TableHead } from '@mui/material';
 
 
 export default function DoughnutApp() {
@@ -292,18 +292,6 @@ useEffect(() => {
                     </div>
                     ))
                     }
-                    <Button
-                        onClick={ handleCart}
-                        sx ={{
-                            backgroundColor: '#cd0f2a',
-                            color: '#fff',
-                            '&:hover': {
-                                backgroundColor: '#fff',
-                                color: '#cd0f2a',
-                            },
-                        }}>
-                        Checkout
-                    </Button>
                    <IconButton
                     onClick={handleCart}
                     sx = {{
