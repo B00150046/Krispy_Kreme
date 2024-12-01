@@ -162,7 +162,7 @@ export default function DoughnutApp() {
                                             <td>{item.item_name}</td>
                                             <td>{item.price}</td>
                                             <td>
-                                                <Button onClick={() => deleteCartItem(item.item_name, item.price, item.time_added)} sx={{ backgroundColor: '#cd0f2a', color: '#fff', '&:hover': { backgroundColor: '#fff', color: '#cd0f2a' } }}>
+                                                <Button onClick={() => deleteCartItem(item.item_name, item.price, new Date(item.time_added))} sx={{ backgroundColor: '#cd0f2a', color: '#fff', '&:hover': { backgroundColor: '#fff', color: '#cd0f2a' } }}>
                                                     Delete
                                                 </Button>
                                             </td>
@@ -190,7 +190,7 @@ export default function DoughnutApp() {
                                 <div sx={{ fontFamily: 'Arial', fontSize: '1.5em', fontWeight: 'bold', color: '#355746' }}>
                                     {item.p_name} € {item.price}
                                 </div>
-                                <Button onClick={() => newCartItem(item.p_name, item.price, item.time_added)} sx={{ backgroundColor: '#cd0f2a', color: '#fff', '&:hover': { backgroundColor: '#fff', color: '#cd0f2a' } }}>
+                                <Button onClick={() => newCartItem(item.item_name, item.price, new Date(item.time_added))} sx={{ backgroundColor: '#cd0f2a', color: '#fff', '&:hover': { backgroundColor: '#fff', color: '#cd0f2a' } }}>
                                     Add to cart
                                 </Button>
                             </div>
