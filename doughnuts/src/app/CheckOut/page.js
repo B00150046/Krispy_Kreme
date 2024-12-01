@@ -101,7 +101,7 @@ export default function DoughnutApp() {
 
                         <Typography variant="h6" sx={{ mt: 2 }}>
                             Order Total: €{total.toFixed(2)}
-                        </Typography>
+                      
 
                         <Button
                             onClick={sendReciept}
@@ -118,6 +118,7 @@ export default function DoughnutApp() {
                         >
                             Buy Now
                         </Button>
+                        </Typography>
                     </Box>
                 )}
             </Container>

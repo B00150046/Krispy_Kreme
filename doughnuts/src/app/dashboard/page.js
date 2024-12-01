@@ -191,9 +191,7 @@ useEffect(() => {
                                         <tr key={i}>
                                              <td>{item.item_name}</td>
                                              <td>{item.price}</td>
-                                        </tr>
-                                      ))}
-                                      <Button onClick={deleteCartItem}
+                                             <Button onClick={deleteCartItem}
                                       sx = {{
                                             backgroundColor: '#cd0f2a',
                                             color: '#fff',
@@ -203,6 +201,9 @@ useEffect(() => {
                                             },
                                       }}
                                       >Delete</Button>
+                                        </tr>
+                                      ))}
+                                     
                                  </tbody>
                             </Table>
                           </TableContainer>
