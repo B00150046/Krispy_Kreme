@@ -65,7 +65,7 @@ export default function CheckoutPage() {
             }
     };
 
-    const deleteSOldession = async () => {
+    const deleteOldSession = async () => {
         const response = await fetch('/api/deleteSession');
         console.log(response);
         
