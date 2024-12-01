@@ -1,6 +1,7 @@
 //This is supposed to delete everything on cart table and movie it to orders table with the current sessions email added to it, it also sends an email confirmining your purchase
 //import { resetCart} from '../../route.js'
 //mlsn.09177e0f860d9743df1644ed424ef6eee0ef50aa5ede162659fc84b37c40b75c bnh
+export const dynamic = 'forced-dynamic';
 import { getCustomSession } from "../sessionCode";
 export async function GET(req, res) {
     //get email address from current session

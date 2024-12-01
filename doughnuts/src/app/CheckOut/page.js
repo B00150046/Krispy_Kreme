@@ -1,6 +1,6 @@
 'use client';
 
-import * as React from 'react'; // Namespace import for React
+import React, { useState, useEffect } from 'react';
 import {
     AppBar,
     Box,
@@ -18,6 +18,7 @@ import {
 import MenuIcon from '@mui/icons-material/Menu';
 
 export default function CheckoutPage() {
+    const [data, setData] = useState([])
     const [cart, setCart] = React.useState([]);
     const [total, setTotal] = React.useState(0);
 
@@ -32,7 +33,7 @@ export default function CheckoutPage() {
                 window.location = '../'
             }
         })
-        
+
         fetch('/api/ShoppingCart')
             .then((res) => res.json())
             .then((data) => {
