@@ -29,19 +29,32 @@ export default function DoughnutApp() {
     };
 
     const deleteCartItem = async (pname, cost, timer) => {
+        // Convert the timer (Date object) to an ISO string
         const stringDate = timer.toISOString();
-        const url = `/api/deleteCartItem?item_name=${pname}&price=${cost}&time_added=${encodeURIComponent(stringDate)}`;
-        console.log("Handling submit for:", url);
-        const result = await runDBCallAsync(url);
     
-       
-        if (result && result.data === "Item successfully deleted") {
-            
-            setCart(prevCart => prevCart.filter(item => item.item_name !== pname || item.price !== cost || item.time_added !== timer));
-            alert("Item removed from cart");
-        } else {
-            alert("Failed to remove item from cart");
+        // Construct the API URL with properly encoded parameters
+        const url = `/api/deleteCartItem?item_name=${encodeURIComponent(pname)}&price=${cost}&time_added=${encodeURIComponent(stringDate)}`;
+        console.log("Handling submit for:", url);
+    
+        try {
+            const response = await fetch(url, { method: 'GET' });
+            const result = await response.json();
+    
+            if (result && result.data === "Item successfully deleted") {
+                // Update the cart state to remove the deleted item
+                setCart(prevCart => prevCart.filter(
+                    item => !(item.item_name === pname && item.price === cost && new Date(item.time_added).getTime() === timer.getTime())
+                ));
+                alert("Item removed from cart");
+            } else {
+                alert("Failed to remove item from cart");
+            }
+        } catch (error) {
+            console.error("Error during deleteCartItem:", error);
+            alert("An error occurred while removing the item.");
         }
+    };
+    
     };
 
     async function runDBCallAsync(url) {
@@ -210,4 +223,4 @@ export default function DoughnutApp() {
 
         </Box>
     );
-}
+
