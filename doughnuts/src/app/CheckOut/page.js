@@ -90,11 +90,7 @@ export default function CheckoutPage() {
                     </Typography>
                    
                     
-                    <div sx={{
-                        size: 'small'
-                    }}>  
-                    Today's temperature: {JSON.stringify(weather.temp)}
-                    </div>
+                   
                 </Toolbar>
             </AppBar>
           
