@@ -149,17 +149,19 @@ export default function DoughnutApp() {
                         fontFamily: 'Arial',
                         fontSize: '2em',
                         fontWeight: 'bold',
-                        color: '#355746',
+                        color: '#b7edd4',
                         textTransform: 'uppercase', 
                        
                     }}>Welcome to Doughnuts</Typography>
                     <Typography variant="h6" sx={{ textAlign: 'center',
                         fontFamily: 'Arial',
                         fontSize: '1.5em',
+                        borderRadius: '5px',
+                        backgroundColor: '#b7edd4',
                         fontWeight: 'bold',
-                        color: '#355746',
+                        color: '#fff',
                         textTransform: 'uppercase',
-                     }}>The best doughnuts in town</Typography>
+                     }}>The best doughnuts in town, from the wild West, the soothing South, to the frigd North and empty East!</Typography>
                     <img src="/img/doughnuts.jpg" alt="Doughnuts" width={500} height={300} sx={{ display: 'block', margin: 'auto' }} />
                 </Box>
             )}
