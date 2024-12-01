@@ -3,6 +3,8 @@ export async function GET(req, res) {
    
         const { searchParams } = new URL(req.url);
         const p_name = searchParams.get('pname');
+        //Get time of product added
+        const time = searchParams.get('time');
         const price = parseFloat(searchParams.get('price')); // Ensure price is a number
 
         console.log(`Product Name: ${p_name}, Price: ${price}`);
@@ -28,7 +30,9 @@ export async function GET(req, res) {
         // Delete item selected
         const result = await collection.deleteOne({ 
             p_name:p_name,
-             price: price });
+             price: price, 
+            time_added: time
+        });
 
         console.log('Insert Result:', result);
 

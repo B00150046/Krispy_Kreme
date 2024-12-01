@@ -4,6 +4,7 @@ export async function GET(req, res) {
         const { searchParams } = new URL(req.url);
         const p_name = searchParams.get('pname');
         const price = parseFloat(searchParams.get('price')); // Ensure price is a number
+        const time = new Date().toLocaleString();
 
         console.log(`Product Name: ${p_name}, Price: ${price}`);
 
@@ -28,6 +29,7 @@ export async function GET(req, res) {
         const result = await collection.insertOne({
             item_name: p_name,
             price: price,
+            time_added: time
         });
 
         console.log('Insert Result:', result);
