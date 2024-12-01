@@ -9,12 +9,8 @@ export async function GET(req, res) {
 
         console.log(`Product Name: ${p_name}, Price: ${price}`);
 
-        // Validate inputs
-        if (!p_name || isNaN(price)) {
-            return res.status(400).json({ error: "Invalid product name or price" });
-        }
-
-        // Connect to MongoDB
+        
+        
         const { MongoClient } = require('mongodb');
         const uri = "mongodb+srv://root:lUJeU2iPcFlE53tb@database.gau0z.mongodb.net/?retryWrites=true&w=majority&appName=database";
         const client = new MongoClient(uri);
@@ -30,6 +26,7 @@ export async function GET(req, res) {
         // Delete item selected
         const result = await collection.deleteOne({ 
             item_name:p_name,
+            price: price,
             time_added: time
         });
 
