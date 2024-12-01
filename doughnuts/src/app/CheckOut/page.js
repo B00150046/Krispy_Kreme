@@ -48,21 +48,23 @@ export default function CheckoutPage() {
     }, []);
 
     const handleBuyNow = async () => {
-        
-            const response = await fetch('/api/sendReciept');
-            console.log(response);
-            console.log(response.ok);
-            console.log(response.status);
-            console.log(response.statusText);
-                
+        try {
+            const response = await fetch('/api/sendReciept', {
+                method: 'POST', // Ensure method matches server endpoint
+            });
+    
             if (response.ok) {
                 alert("Purchase successful!");
-                setCart([]);
+                setCart([]); // Clear local cart state
                 setTotal(0);
             } else {
                 const errorResponse = await response.json();
                 alert(`Failed to purchase: ${errorResponse.error}`);
             }
+        } catch (error) {
+            console.error("Error during purchase:", error);
+            alert("An error occurred while processing the purchase.");
+        }
     };
 
     const deleteOldSession = async () => {
