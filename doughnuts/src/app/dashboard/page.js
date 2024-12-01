@@ -32,10 +32,14 @@ export default function DoughnutApp() {
         const url = `/api/deleteCartItem?pname=${pname}&price=${cost}&time_added=${timer}`;
         console.log("Handling submit for:", url);
         const result = await runDBCallAsync(url);
-        if (result) {
-            // Remove item from cart state
-            setCart(prevCart => prevCart.filter(item => item.item_name !== pname || item.price !== cost));
+    
+       
+        if (result && result.data === "Item successfully deleted") {
+            
+            setCart(prevCart => prevCart.filter(item => item.item_name !== pname || item.price !== cost || item.time_added !== timer));
             alert("Item removed from cart");
+        } else {
+            alert("Failed to remove item from cart");
         }
     };
 
