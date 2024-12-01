@@ -283,7 +283,7 @@ useEffect(() => {
                     ))
                     }
                     <Button
-                        onClick={ window.location = '/CheckOut'}
+                        onClick={ handleCart}
                         sx ={{
                             backgroundColor: '#cd0f2a',
                             color: '#fff',

@@ -21,6 +21,7 @@ export default function CheckoutPage() {
     const [data, setData] = useState([])
     const [cart, setCart] = React.useState([]);
     const [total, setTotal] = React.useState(0);
+    
 
     useEffect(() => {
         fetch('../api/getData')
@@ -48,38 +49,25 @@ export default function CheckoutPage() {
 
     const handleBuyNow = async () => {
         
-            const response = await fetch('/api/sendReciept', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-    
+            const response = await fetch('/api/sendReciept');
+            console.log(response);
+            console.log(response.ok);
+            console.log(response.status);
+            console.log(response.statusText);
+                
             if (response.ok) {
                 alert("Purchase successful!");
                 setCart([]);
                 setTotal(0);
-         
+            } else {
                 const errorResponse = await response.json();
                 alert(`Failed to purchase: ${errorResponse.error}`);
             }
-       
-    
     };
 
     return (
         <Box sx={{ p: 4 }}>
-            <AppBar position="static">
-                <Toolbar>
-                    <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
-                        <MenuIcon />
-                    </IconButton>
-                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                        Checkout
-                    </Typography>
-                </Toolbar>
-            </AppBar>
-
+          
             <TableContainer>
                 <Table>
                     <TableHead>
