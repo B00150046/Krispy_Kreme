@@ -3,8 +3,8 @@ export const dynamic = 'forced-dynamic';
 export async function GET(req, res) {
     const { searchParams } = new URL(req.url);
     const p_name = searchParams.get('pname');
-    const time = searchParams.get('time_added');
     const price = parseFloat(searchParams.get('price')); // Ensure price is a number
+    const time = searchParams.get('time_added');
 
     console.log(`Delete Request - Product Name: ${p_name}, Price: ${price}, Time: ${time}`);
 
