@@ -9,58 +9,39 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import TextField from '@mui/material/TextField';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { Container, Icon, Table, TableContainer, TableHead } from '@mui/material';
-
+import { Container, Table, TableContainer, TableHead } from '@mui/material';
+import TableRow from "@mui/material/TableRow";
+import TableCell from "@mui/material/TableCell";
+import TableBody from "@mui/material/TableBody";
 
 export default function DoughnutApp() {
     const [data, setData] = useState([])
-const [order, setOrders] = useState([])
-
-
-
-  async function runDBCallAsync(url) {
-    const res = await fetch(url);
-    const data = await res.json();
-    alert(data);
-    }  
-
-useEffect(() => {
-    
-    fetch('/api/getCart')
-    .then((order) => order.json())
-    .then((order) => {
-        setOrders(order)
-    })
-    if(data.data == false){
-        window.location = '../'
-    }
-
-}, [])
-
-let total = 0;
- //____________________________________________________________________________________
-//PAGES FOR MULTI-PAGE APP
-   
+    const [order, setOrders] = useState([]);
     const [showCheckOut, setShowCheckout] = useState(true);
 
+    useEffect(() => {
+        fetch('/api/getCart')
+            .then((res) => res.json())
+            .then((data) => {
+                setOrders(data); // Assuming API returns an array of cart items
+            })
+            .catch((error) => {
+                console.error("Error fetching cart data:", error);
+            });
+    }, []);
 
-    order.map((item, i) => (
+    // Calculate total
+    const total = order.reduce((acc, item) => acc + item.price, 0);
 
+    // Define `sendReciept` function
+    const sendReciept = () => {
+        alert("Receipt sent! Total: €" + total.toFixed(2));
+        // You can add logic here to call an API endpoint for processing the order
+    };
 
-           total = total + item.price
-    
-      ))
-
-    //____________________________________________________________________________________
-    //if(!cart) return <p>No cart items sorry! </p>
-   // if(!order) return <p>Loading</p>
-   // if(!weather) return <p>No weather</p>
-    //if(!pro) return <p>Loading</p>
     return (
-        //----MENU BAR----
         <Box sx={{ flexGrow: 1 }}>
+            {/* Menu Bar */}
             <AppBar position="static" sx={{ backgroundColor: '#006938' }}>
                 <Toolbar>
                     <IconButton
@@ -78,82 +59,68 @@ let total = 0;
                             alt="Doughnuts"
                             width={100}
                             height={40}
-                            sx={{ flexGrow: 1, textAlign: 'center' }}
+                            sx={{ textAlign: "center" }}
                         />
                     </Typography>
                     <Button
-                        onClick={handleProducts}
-                        sx ={{
+                        sx={{
                             color: '#355746',
-                            //make font bold
                             fontWeight: 'bold',
                             '&:hover': {
                                 color: '#fff',
                             },
-                        }}>
+                        }}
+                    >
                         Products
                     </Button>
-                    
-                    <div sx={{
-                        size: 'small'
-                    }}>  
-                
-                    </div>
                 </Toolbar>
             </AppBar>
-            <Container component="main" maxWidth="xs">
-               
-            </Container>
-         
-            
-            {showCheckOut && (
-                <Box component="section" sx={{ p: 2, border: '1px dashed grey' }}>
-                    
-                   
 
-                    <TableContainer>
+            {/* Main Container */}
+            <Container component="main" maxWidth="md">
+                {showCheckOut && (
+                    <Box component="section" sx={{ p: 2, border: '1px dashed grey' }}>
+                        <TableContainer>
                             <Table>
-                                 <TableHead>
-                                      <tr>
-                                        <th>Item</th>
-                                        <th>Price</th>
-                                      </tr>
-                                 </TableHead>
-                                 <tbody>
-                                      {
-                                      
-                                      order.map((item, i) => (
-
-
-                                        <tr key={i}>
-                                             <td>{item.item_name}</td>
-                                             <td>{item.price}</td>
-                                        </tr>
-                                      ))
-
-                                      }
-
-
-                                 </tbody>
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>Item</TableCell>
+                                        <TableCell>Price</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {order.map((item, i) => (
+                                        <TableRow key={i}>
+                                            <TableCell>{item.item_name}</TableCell>
+                                            <TableCell>€{item.price.toFixed(2)}</TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
                             </Table>
-                          </TableContainer>
+                        </TableContainer>
 
-                          The order total is  {total.toFixed(2)}
-                          <Button
-                          onClick={sendReciept}
-                          sx = {{
-                                color: '#355746',
-                                //make font bold
-                                fontWeight: 'bold',
+                        <Typography variant="h6" sx={{ mt: 2 }}>
+                            Order Total: €{total.toFixed(2)}
+                        </Typography>
+
+                        <Button
+                            onClick={sendReciept}
+                            variant="contained"
+                            sx={{
+                                mt: 2,
+                                backgroundColor: '#cd0f2a',
+                                color: '#fff',
                                 '&:hover': {
-                                    color: '#fff',
+                                    backgroundColor: '#fff',
+                                    color: '#cd0f2a',
                                 },
-                          }}>
+                            }}
+                        >
                             Buy Now
-                          </Button>
-
-                </Box>
-            )}
+                        </Button>
+                    </Box>
+                )}
+            </Container>
         </Box>
     );
 }
