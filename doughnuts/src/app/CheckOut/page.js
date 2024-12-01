@@ -35,6 +35,8 @@ export default function DoughnutApp() {
 
     // Define `sendReciept` function
     const sendReciept = () => {
+        const url = '/api/sendReciept';
+        console.log ("Sending reciept to: ", url);
         alert("Receipt sent! Total: €" + total.toFixed(2));
         // You can add logic here to call an API endpoint for processing the order
     };
