@@ -21,9 +21,15 @@ export default function CheckoutPage() {
     }, []);
 
     // Handle Buy Now
-    const sendReciept = () => {
-        alert("Thank you for your purchase!");
-        // Add your API call for order processing here
+    const handleSendReciept = () => {
+        fetch('/api/sendReciept')
+            .then((res) => res.json())
+            .then((data) => {
+                console.log("Reciept sent:", data); // Debug log
+            })
+            .catch((error) => {
+                console.error("Error sending reciept:", error);
+            });
     };
 
     return (
@@ -41,17 +47,17 @@ export default function CheckoutPage() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {cart && cart.length > 0 ? (
+                        {cart.length > 0 ? (
                             cart.map((item, i) => (
                                 <TableRow key={i}>
-                                    <TableCell>{item.item_name}</TableCell>
+                                    <TableCell>{item.p_name}</TableCell>
                                     <TableCell>€{item.price.toFixed(2)}</TableCell>
                                 </TableRow>
                             ))
                         ) : (
                             <TableRow>
                                 <TableCell colSpan={2} sx={{ textAlign: "center" }}>
-                                    Your cart is empty. Add some items to proceed.
+                                    Your cart is empty.
                                 </TableCell>
                             </TableRow>
                         )}
@@ -64,7 +70,7 @@ export default function CheckoutPage() {
             </Typography>
 
             <Button
-                onClick={sendReciept}
+                onClick={handleSendReciept}
                 sx={{
                     mt: 2,
                     backgroundColor: '#cd0f2a',

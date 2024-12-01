@@ -4,7 +4,7 @@
 export async function GET(req, res) {
     //get email address from current session
     const session = req.session;
-    const nuEmail = session ? session.email : null;
+    const nuEmail = session.email;
     if (!nuEmail){
         return res.json({"error":"no email"})
     }
