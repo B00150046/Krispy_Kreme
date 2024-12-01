@@ -21,7 +21,18 @@ export default function CheckoutPage() {
     const [cart, setCart] = React.useState([]);
     const [total, setTotal] = React.useState(0);
 
-    React.useEffect(() => {
+    useEffect(() => {
+        fetch('/api/getData')
+        .then((data) => data.json())
+        .then((data) => {
+           
+            console.log("session status" + data.data)
+    
+            if(data.data == false){
+                window.location = '../'
+            }
+        })
+        
         fetch('/api/ShoppingCart')
             .then((res) => res.json())
             .then((data) => {
