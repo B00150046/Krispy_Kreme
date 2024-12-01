@@ -47,19 +47,19 @@ export default function CheckoutPage() {
     }, []);
 
     const handleBuyNow = async () => {
-        try {
-            const response = await fetch('/api/sendReciept');
-            if (response.ok) {
-                alert("Purchase successful!");
-                setCart([]);
-                setTotal(0);
-            } else {
-                const result = await response.json();
-                alert(`Failed to purchase: ${result.error}`);
-            }
-        } catch (error) {
-            console.error("Error:", error);
-            alert("An error occurred. Please try again.");
+        const response = await fetch('/api/sendReciept', {
+            method: 'POST', // Specify POST method
+            headers: {
+                'Content-Type': 'application/json', // Explicitly define content type
+            },
+        });
+        if (response.ok) {
+            alert("Purchase successful!");
+            setCart([]);
+            setTotal(0);
+        } else {
+            const result = await response.json(); // Ensure error response is parsed correctly
+            alert(`Failed to purchase: ${result.error}`);
         }
     };
 
