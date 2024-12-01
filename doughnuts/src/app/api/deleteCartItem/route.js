@@ -29,7 +29,7 @@ export async function GET(req, res) {
 
         // Delete item selected
         const result = await collection.deleteOne({ 
-            p_name:p_name,
+            item_name:p_name,
              price: price, 
             time_added: time
         });
