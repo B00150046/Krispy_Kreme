@@ -107,7 +107,7 @@ export default function CheckoutPage() {
                     },
                 }}
             >
-                Buy Now
+                Buy Now!
             </Button>
         </Box>
     );
