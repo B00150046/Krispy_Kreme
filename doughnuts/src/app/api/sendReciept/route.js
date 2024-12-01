@@ -7,10 +7,10 @@ import { MongoClient } from "mongodb";
 import { MailerSend, Recipient, EmailParams } from "mailersend";
 import { getCustomSession } from "../sessionCode.js";
 export default async function handler(req, res) {
-    if (req.method !== "POST") {
-        return res.status(405).json({ error: "Method Not Allowed" });
+    if (req.method !== 'POST') {
+        return res.status(405).json({ error: 'Method Not Allowed. Use POST instead.' });
     }
-
+try{
     //get email address from current session
     const session = await getCustomSession(req);
     console.log("Session in API:", session); // Debug session content
@@ -77,7 +77,13 @@ session.destroy();
 
 await client.close();
 return res.status(200).json({ message: "Receipt sent and order processed" });
-} 
+
+} catch (error) {
+    console.error('Error:', error);
+    return res.status(500).json({ error: 'Internal Server Error' });
+}
+}
+
   
 
 
