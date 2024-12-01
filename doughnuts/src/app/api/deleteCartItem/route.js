@@ -14,7 +14,7 @@ export async function GET(req, res) {
 
         // Connect to MongoDB
         const { MongoClient } = require('mongodb');
-        const uri = "mongodb+srv://root:lUJeU2iPcFlE53tb@database.gau0z.mongodb.net/?retryWrites=true&w=majority&appName=database";
+        const uri = process.env.DB_ADDRESS
         const client = new MongoClient(uri);
         const dbName = 'Krispee';
 
