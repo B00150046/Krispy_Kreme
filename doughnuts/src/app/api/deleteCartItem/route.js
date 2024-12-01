@@ -19,6 +19,7 @@ export async function GET(req, res) {
     const client = new MongoClient(uri);
     const dbName = 'Krispee';
 
+    try {
         await client.connect();
         console.log('Connected successfully to server');
 
@@ -31,7 +32,7 @@ export async function GET(req, res) {
             time_added: time
         });
 
-        // Check the for deletion
+        // Check the result of the deletion
         if (result.deletedCount === 1) {
             console.log('Successfully deleted the item');
             return res.status(200).json({ data: "Item successfully deleted" });
@@ -40,5 +41,10 @@ export async function GET(req, res) {
             return res.status(404).json({ error: "Item not found" });
         }
 
-   
+    } catch (err) {
+        console.error('Error during database operation:', err);
+        return res.status(500).json({ error: "Internal server error" });
+    } finally {
+        await client.close(); // Ensure the connection is closed after operation
+    }
 }
