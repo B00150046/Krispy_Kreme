@@ -23,7 +23,7 @@ export default function CheckoutPage() {
     const [total, setTotal] = React.useState(0);
 
     useEffect(() => {
-        fetch('/api/getData')
+        fetch('../api/getData')
         .then((data) => data.json())
         .then((data) => {
            
@@ -34,7 +34,7 @@ export default function CheckoutPage() {
             }
         })
 
-        fetch('/api/ShoppingCart')
+        fetch('../api/ShoppingCart')
             .then((res) => res.json())
             .then((data) => {
                 setCart(data);
@@ -48,7 +48,7 @@ export default function CheckoutPage() {
 
     const handleBuyNow = async () => {
         try {
-            const response = await fetch('/api/sendReciept', {
+            const response = await fetch('../api/sendReciept', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
