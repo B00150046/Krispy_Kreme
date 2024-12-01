@@ -66,8 +66,9 @@ export default function CheckoutPage() {
     };
 
     return (
-        <Box sx={{ p: 4, backgroundColor: '#d0f0c0', border: '2px solid #006938', color: '#000' }}>
-             <AppBar position="static" sx={{ backgroundColor: '#006938' }}>
+     
+        <div>
+            <AppBar position="static" sx={{ backgroundColor: '#006938' }}>
                 <Toolbar>
                     <IconButton
                         size="large"
@@ -80,7 +81,6 @@ export default function CheckoutPage() {
                     </IconButton>
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         <img
-                           
                             src="/img/Logo.png"
                             alt="Doughnuts"
                             width={100}
@@ -91,51 +91,55 @@ export default function CheckoutPage() {
                 </Toolbar>
             </AppBar>
           
-            <TableContainer>
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Item</TableCell>
-                            <TableCell>Price</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {cart.length > 0 ? (
-                            cart.map((item, i) => (
-                                <TableRow key={i}>
-                                    <TableCell>{item.p_name}</TableCell>
-                                    <TableCell>€{item.price.toFixed(2)}</TableCell>
-                                </TableRow>
-                            ))
-                        ) : (
+            <Box onSubmit = {handleBuyNow}
+             sx={{ p: 4, backgroundColor: '#d0f0c0', border: '2px solid #006938', color: '#000' }}>
+                <TableContainer>
+                    <Table>
+                        <TableHead>
                             <TableRow>
-                                <TableCell colSpan={2} sx={{ textAlign: "center" }}>
-                                    Your cart is empty.
-                                </TableCell>
+                                <TableCell>Item</TableCell>
+                                <TableCell>Price</TableCell>
                             </TableRow>
-                        )}
-                    </TableBody>
-                </Table>
-            </TableContainer>
+                        </TableHead>
+                        <TableBody>
+                            {cart.length > 0 ? (
+                                cart.map((item, i) => (
+                                    <TableRow key={i}>
+                                        <TableCell>{item.p_name}</TableCell>
+                                        <TableCell>€{item.price.toFixed(2)}</TableCell>
+                                    </TableRow>
+                                ))
+                            ) : (
+                                <TableRow>
+                                    <TableCell colSpan={2} sx={{ textAlign: "center" }}>
+                                        Your cart is empty.
+                                    </TableCell>
+                                </TableRow>
+                            )}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
 
-            <Typography variant="h6" sx={{ mt: 2 }}>
-                Total: €{total.toFixed(2)}
-            </Typography>
+                <Typography variant="h6" sx={{ mt: 2 }}>
+                    Total: €{total.toFixed(2)}
+                </Typography>
 
-            <Button
-                onClick={handleBuyNow}
-                sx={{
-                    mt: 2,
-                    backgroundColor: '#cd0f2a',
-                    color: '#fff',
-                    '&:hover': {
-                        backgroundColor: '#fff',
-                        color: '#cd0f2a',
-                    },
-                }}
-            >
-                Buy Now!
-            </Button>
-        </Box>
+                <Button
+                    onClick={deleteSession}
+                    sx={{
+                        mt: 2,
+                        backgroundColor: '#cd0f2a',
+                        color: '#fff',
+                        '&:hover': {
+                            backgroundColor: '#fff',
+                            color: '#cd0f2a',
+                        },
+                    }}
+                >
+                    Buy Now!
+                </Button>
+            </Box>
+        </div>
+       
     );
 }
