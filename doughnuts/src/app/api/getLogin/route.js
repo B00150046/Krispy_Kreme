@@ -8,7 +8,7 @@ export async function GET(req, res) {
     const { searchParams } = new URL(req.url)
     const email = searchParams.get('email')
     const pass = searchParams.get('password')
-    const uri = process.env.DB_ADDRESS
+    const uri = process.env.MONGODB_URI;
     const client = new MongoClient(uri);
    
         await client.connect();

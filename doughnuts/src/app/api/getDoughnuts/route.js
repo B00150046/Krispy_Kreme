@@ -3,7 +3,7 @@ export const dynamic = 'forced-dynamic';
 export async function GET(req, res) {
 
     
-    const uri = process.env.DB_ADDRESS
+    const uri = process.env.MONGODB_URI;
     const client = new MongoClient(uri);
     try{
         await client.connect();
