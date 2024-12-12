@@ -273,10 +273,10 @@ const [errorHolder, setErrorHolder] = React.useState(false);
                         </Box>
                     </Box>
                 )}
-                <React.Fragment>
 
-     
 
+            </Container>
+            <React.Fragment>
 <Dialog
   open={open}
   onClose={handleClose}
@@ -305,8 +305,6 @@ const [errorHolder, setErrorHolder] = React.useState(false);
 </Dialog>
 
 </React.Fragment>
-
-            </Container>
         </Box>
     );
 }
