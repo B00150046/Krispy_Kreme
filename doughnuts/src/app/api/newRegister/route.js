@@ -19,11 +19,17 @@ export async function GET(req, res) {
     const db = client.db('Krispee');
     const col = db.collection('users');
     // Create new user, automatically set role to customer
-    const name = searchParams.get('name');
     const email = searchParams.get('email');
+    const password = searchParams.get('password');
     const phone = searchParams.get('phone');
 
-    const document = await col.insertOne({     "name": name,      "email": email,      "phone": phone,      "role": "customer"}); // Print results
+    const bcrypt = require('bcrypt');
+    const saltRounds = 10;
+    const hash = bcrypt.hashSync(password, saltRounds);
+
+
+
+    const document = await col.insertOne({   "email": email,      "password": hash, "phone": phone,      "role": "customer"}); // Print results
 
    
 

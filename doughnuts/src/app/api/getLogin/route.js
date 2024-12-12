@@ -16,13 +16,13 @@ export async function GET(req, res) {
         const db = client.db('Krispee');
         const col = db.collection('users');
         const Resp = await col.find({"email": email,"password": pass}).toArray();
-
-        
         console.log(Resp[0]);
-
-
-        
         let status = ''
+        const bcrypt = require('bcrypt');
+
+        let hashResult = bcrypt.compareSync(pass, findResult[0].pass);
+        console.log("checking " + findResult[0].pass);
+        console.log("Hash Comparison Result " + hashResult);
        if(Resp[0].role != 'customer') {
 
         status = 'novalid'+'-'+Resp[0].role

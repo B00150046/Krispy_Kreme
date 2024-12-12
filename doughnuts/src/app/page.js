@@ -12,6 +12,12 @@ import MenuIcon from '@mui/icons-material/Menu';
 import TextField from '@mui/material/TextField';
 import Container from '@mui/material/Container';
 
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+
 export default function DoughnutApp() {
     // State definitions
     const [data, setData] = useState([]);
@@ -34,21 +40,39 @@ export default function DoughnutApp() {
     // Handler functions for form submissions
     const handleNewRegister = (event) => {
         event.preventDefault();
+        let errorMessage = valifateForm(event);
+        setErrorHolder(errorMessage);
+        if(errorMessage.length > 0){
+
+            setOpen(true); // open the dialog and show the user the error.
+      
+          } else {
         const data = new FormData(event.currentTarget);
-        const name = data.get('reg_name');
         const email = data.get('reg_email');
+        const password = data.get('reg_pass');
         const phone = data.get('reg_phone');
 
-        runDBCallAsync(`/api/newregister?name=${name}&email=${email}&phone=${phone}`);
+        runDBCallAsync(`/api/newregister?email=${email}&password=${password}&phone=${phone}`);
     };
 
     const handleNewLogin = (event) => {
         event.preventDefault();
+        let errorMessage = valifateForm(event);
+        setErrorHolder(errorMessage);
+        if(errorMessage.length > 0){
+
+            setOpen(true); // open the dialog and show the user the error.
+      
+          } else {
         const data = new FormData(event.currentTarget);
         const email = data.get('log_email');
+        var validator = require("email-validator");
+        let emailCheck = validator.validate(email);
+       
         const password = data.get('log_password');
 
         runDBCallAsync(`/api/getLogin?email=${email}&password=${password}`);
+          }
     };
 
     async function runDBCallAsync(url) {
@@ -74,6 +98,21 @@ export default function DoughnutApp() {
             .then((res) => res.json())
             .then((data) => setData(data));
     }, []);
+
+    // first  
+
+const [open, setOpen] = React.useState(false);
+
+const handleClickOpen = () => {
+  setOpen(true);
+};
+
+const handleClose = () => {
+  setOpen(false);
+};
+// second
+
+const [errorHolder, setErrorHolder] = React.useState(false);
 
     // JSX rendering
     return (
@@ -130,23 +169,6 @@ export default function DoughnutApp() {
                             <TextField
                                 margin="normal"
                                 required
-                                id="reg_name"
-                                label="Name"
-                                name="reg_name"
-                                autoComplete="name"
-                                autoFocus
-                                sx={{
-                                    backgroundColor: '#fff',
-                                    borderRadius: '5px',
-                                    '&:hover': {
-                                        backgroundColor: '#b7edd4',
-                                    },
-                                }}
-                            />
-                            <br></br>
-                            <TextField
-                                margin="normal"
-                                required
                                 id="reg_email"
                                 label="Email Address"
                                 name="reg_email"
@@ -156,6 +178,25 @@ export default function DoughnutApp() {
                                     borderRadius: '5px',
                                     '&:hover': {
                                         backgroundColor: '#b7edd4',
+                                        maxlength: '30',
+                                    },
+                                }}
+                            />
+                            <br></br>
+                            <TextField
+                                margin="normal"
+                                required
+                                id="reg_pass"
+                                label="Password"
+                                name="reg_pass"
+                                autoComplete="pass"
+                                autoFocus
+                                sx={{
+                                    backgroundColor: '#fff',
+                                    borderRadius: '5px',
+                                    '&:hover': {
+                                        backgroundColor: '#b7edd4',
+                                        maxlength: '30',
                                     },
                                 }}
                             />
@@ -172,6 +213,7 @@ export default function DoughnutApp() {
                                     borderRadius: '5px',
                                     '&:hover': {
                                         backgroundColor: '#b7edd4',
+                                        maxlength: '30',
                                     },
                                 }}
                             />
@@ -201,6 +243,7 @@ export default function DoughnutApp() {
                                     borderRadius: '5px',
                                     '&:hover': {
                                         backgroundColor: '#b7edd4',
+                                        maxlength: '30',
                                     },
                                 }}
                             />
@@ -219,17 +262,52 @@ export default function DoughnutApp() {
                                     '&:hover': {
                                         border: '1px solid #e7eAd4',
                                         backgroundColor: '#b7edd4',
+                                        maxlength: '30',
                                     },
                                 }}
                             />
                             <br></br>
-                            <Button type="submit" sx={{ mt: 3, mb: 2, backgroundColor: '#cd0f2a' }}>
+                            <Button type="submit" sx={{ mt: 3, mb: 2, backgroundColor: '#cd0f2a', color: '#fff'}}>
                                 Login
                             </Button>
                         </Box>
                     </Box>
                 )}
+                <React.Fragment>
+
+     
+
+<Dialog
+  open={open}
+  onClose={handleClose}
+  aria-labelledby="alert-dialog-title"
+  aria-describedby="alert-dialog-description"
+  >
+
+  <DialogTitle id="alert-dialog-title">
+    {"Error"}
+  </DialogTitle>
+
+  <DialogContent>
+    <DialogContentText id="alert-dialog-description">
+     {errorHolder}
+    </DialogContentText>
+    </DialogContent>
+  <DialogActions>
+    <Button onClick={handleClose} autoFocus>
+
+      Close
+
+    </Button>
+
+  </DialogActions>
+
+</Dialog>
+
+</React.Fragment>
+
             </Container>
         </Box>
     );
+}
 }
