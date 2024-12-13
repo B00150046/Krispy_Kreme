@@ -52,6 +52,21 @@ export default function DoughnutApp() {
         const password = data.get('reg_pass');
         const phone = data.get('reg_phone');
 
+        setOpen(true); // open the dialog and show the user the error.
+        if(email.length > 30 || password.length > 30){
+            errorMessage = "Email or password is too long";
+            setErrorHolder(errorMessage);
+            setOpen(true);
+
+        }
+
+        if(email.length == 0 || password.length == 0 || phone.length == 0){
+            errorMessage = "Empty fields";
+            setErrorHolder(errorMessage);
+            setOpen(true);
+
+        }
+
         runDBCallAsync(`/api/newregister?email=${email}&password=${password}&phone=${phone}`);
     };
 
@@ -62,6 +77,19 @@ export default function DoughnutApp() {
         if(errorMessage.length > 0){
 
             setOpen(true); // open the dialog and show the user the error.
+            if(email.length > 30 || password.length > 30){
+                errorMessage = "Email or password is too long";
+                setErrorHolder(errorMessage);
+                setOpen(true);
+
+            }
+
+            if(email.length == 0 || password.length == 0){
+                errorMessage = "Email or password is empty";
+                setErrorHolder(errorMessage);
+                setOpen(true);
+
+            }
       
           } else {
         const data = new FormData(event.currentTarget);
