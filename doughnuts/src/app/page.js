@@ -35,41 +35,49 @@ export default function DoughnutApp() {
     // Handler functions for form submissions
     const handleNewRegister = (event) => {
         event.preventDefault();
-        let errorMessage = validateForm(event); 
-        setErrorHolder(errorMessage);
-        if(email == '' || password  == '' || phone == ''){
-            alert("Please fill in all fields");
-            return;
-        }
-        if(phone.length < 10){
-            alert("Phone number must be 10 digits");
-            return;
-        }
-
-        if(password.length < 8){
-            alert("Password must be at least 8 characters");
-
-        }
-        if (password.length > 30){
-            alert("Password must be less than 30 characters");
-        }
+        let errorMessage = "";
         const data = new FormData(event.currentTarget);
         const email = data.get('reg_email');
+        var validator = require("email-validator");
+        let emailValid = validator.validate(email);
+        if (!emailValid) {
+            errorMessage += "Invalid email address. ";
+        }
         const password = data.get('reg_pass');
         const phone = data.get('reg_phone');
 
+        if(password.length < 8){
+            errorMessage += "Password must be at least 8 characters long. ";
+        }
+        if(phone.length < 10){
+            errorMessage += "Phone number must be at least 10 digits long. ";
+        }
+       
+
         runDBCallAsync(`/api/newregister?email=${email}&password=${password}&phone=${phone}`);
+
+        if(errorMessage !== ""){
+            alert(errorMessage);
+            return errorMessage;
+        }
     };
 
     const handleNewLogin = (event) => {
         event.preventDefault();
        
-        setErrorHolder(errorMessage);
+       let errorMessage = "";
+
       
         const data = new FormData(event.currentTarget);
         const email = data.get('log_email');
-       
+        var validator = require("email-validator");
+        let emailValid = validator.validate(email);
         const password = data.get('log_password');
+
+        if (!emailValid || password.length < 8) {
+            errorMessage += "Invalid credentials. ";
+            return errorMessage;
+        }
 
         runDBCallAsync(`/api/getLogin?email=${email}&password=${password}`);
           
