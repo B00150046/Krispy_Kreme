@@ -304,7 +304,35 @@ const [errorHolder, setErrorHolder] = React.useState(false);
 
 
             </Container>
-          
+            <React.Fragment>
+<Dialog
+  open={open}
+  onClose={handleClose}
+  aria-labelledby="alert-dialog-title"
+  aria-describedby="alert-dialog-description"
+  >
+
+  <DialogTitle id="alert-dialog-title">
+    {"Error"}
+  </DialogTitle>
+
+  <DialogContent>
+    <DialogContentText id="alert-dialog-description">
+     {errorHolder}
+    </DialogContentText>
+    </DialogContent>
+  <DialogActions>
+    <Button onClick={handleClose} autoFocus>
+
+      Close
+
+    </Button>
+
+  </DialogActions>
+
+</Dialog>
+
+</React.Fragment>
         </Box>
     );
 }

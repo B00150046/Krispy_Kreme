@@ -47,7 +47,7 @@ useEffect(() => {
         console.log("session status" + data.data)
 
         if(data.data == false){
-            window.location = '/newregister'
+            window.location = '../'
         }
     })
     
