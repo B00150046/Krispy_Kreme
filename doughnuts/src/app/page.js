@@ -12,11 +12,6 @@ import MenuIcon from '@mui/icons-material/Menu';
 import TextField from '@mui/material/TextField';
 import Container from '@mui/material/Container';
 
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
 
 export default function DoughnutApp() {
     // State definitions
@@ -40,67 +35,44 @@ export default function DoughnutApp() {
     // Handler functions for form submissions
     const handleNewRegister = (event) => {
         event.preventDefault();
-        let errorMessage = valifateForm(event);
+        let errorMessage = validateForm(event); 
         setErrorHolder(errorMessage);
-        if(errorMessage.length > 0){
+        if(email == '' || password  == '' || phone == ''){
+            alert("Please fill in all fields");
+            return;
+        }
+        if(phone.length < 10){
+            alert("Phone number must be 10 digits");
+            return;
+        }
 
-            setOpen(true); // open the dialog and show the user the error.
-      
-          } else {
+        if(password.length < 8){
+            alert("Password must be at least 8 characters");
+
+        }
+        if (password.length > 30){
+            alert("Password must be less than 30 characters");
+        }
         const data = new FormData(event.currentTarget);
         const email = data.get('reg_email');
         const password = data.get('reg_pass');
         const phone = data.get('reg_phone');
-
-        setOpen(true); // open the dialog and show the user the error.
-        if(email.length > 30 || password.length > 30){
-            errorMessage = "Email or password is too long";
-            setErrorHolder(errorMessage);
-            setOpen(true);
-
-        }
-
-        if(email.length == 0 || password.length == 0 || phone.length == 0){
-            errorMessage = "Empty fields";
-            setErrorHolder(errorMessage);
-            setOpen(true);
-
-        }
 
         runDBCallAsync(`/api/newregister?email=${email}&password=${password}&phone=${phone}`);
     };
 
     const handleNewLogin = (event) => {
         event.preventDefault();
-        let errorMessage = valifateForm(event);
+       
         setErrorHolder(errorMessage);
-        if(errorMessage.length > 0){
-
-            setOpen(true); // open the dialog and show the user the error.
-            if(email.length > 30 || password.length > 30){
-                errorMessage = "Email or password is too long";
-                setErrorHolder(errorMessage);
-                setOpen(true);
-
-            }
-
-            if(email.length == 0 || password.length == 0){
-                errorMessage = "Email or password is empty";
-                setErrorHolder(errorMessage);
-                setOpen(true);
-
-            }
       
-          } else {
         const data = new FormData(event.currentTarget);
         const email = data.get('log_email');
-        var validator = require("email-validator");
-        let emailCheck = validator.validate(email);
        
         const password = data.get('log_password');
 
         runDBCallAsync(`/api/getLogin?email=${email}&password=${password}`);
-          }
+          
     };
 
     async function runDBCallAsync(url) {
@@ -127,23 +99,11 @@ export default function DoughnutApp() {
             .then((data) => setData(data));
     }, []);
 
-    // first  
-
-const [open, setOpen] = React.useState(false);
-
-const handleClickOpen = () => {
-  setOpen(true);
-};
-
-const handleClose = () => {
-  setOpen(false);
-};
-// second
-
-const [errorHolder, setErrorHolder] = React.useState(false);
-
+   
     // JSX rendering
-    return (
+
+
+            return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static" sx={{ backgroundColor: '#006938' }}>
                 <Toolbar>
@@ -301,39 +261,8 @@ const [errorHolder, setErrorHolder] = React.useState(false);
                         </Box>
                     </Box>
                 )}
-
-
             </Container>
-            <React.Fragment>
-<Dialog
-  open={open}
-  onClose={handleClose}
-  aria-labelledby="alert-dialog-title"
-  aria-describedby="alert-dialog-description"
-  >
-
-  <DialogTitle id="alert-dialog-title">
-    {"Error"}
-  </DialogTitle>
-
-  <DialogContent>
-    <DialogContentText id="alert-dialog-description">
-     {errorHolder}
-    </DialogContentText>
-    </DialogContent>
-  <DialogActions>
-    <Button onClick={handleClose} autoFocus>
-
-      Close
-
-    </Button>
-
-  </DialogActions>
-
-</Dialog>
-
-</React.Fragment>
         </Box>
     );
 }
-}
+
