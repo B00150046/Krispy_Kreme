@@ -1,4 +1,3 @@
-export const dynamic = 'forced-dynamic';
 const { MongoClient, ServerApiVersion } = require('mongodb');
 
 export async function GET(req, res) {

@@ -67,7 +67,15 @@ export default function DoughnutApp() {
             return null; // Return null in case of error
         }
     }
-
+    async function destroySession() {
+        const url = '/api/deleteSession';
+        console.log("Handling submit for:", url);
+        const result = await runDBCallAsync(url);
+        if (result) {
+            alert("Session destroyed");
+            window.location = '../';
+        }
+    }   
     useEffect(() => {
         async function fetchData() {
             const sessionResponse = await fetch('/api/getData');
@@ -123,7 +131,7 @@ export default function DoughnutApp() {
                     </IconButton>
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         <img
-                            onClick={handleHome}
+                            onClick={destroySession}
                             src="/img/Logo.png"
                             alt="Doughnuts"
                             width={100}

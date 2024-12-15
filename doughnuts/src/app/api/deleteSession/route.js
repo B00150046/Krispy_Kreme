@@ -1,4 +1,3 @@
-export const dynamic = 'forced-dynamic';
 import { getCustomSession } from "../sessionCode.js";
 
 
